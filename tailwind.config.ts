@@ -45,7 +45,7 @@ const config: Config = {
         primary: "#16437C",
         secondary: "#821518",
         background: "#F4f4f4",
-        webblack: "#443D3D"
+        webblack: "#585858"
       },
 
       width: {
@@ -54,23 +54,13 @@ const config: Config = {
       boxShadow: {
         slider: "0px 7px 14.9px 0px #00000038;",
         shadow: "4px 4px 4px rgba(33, 33, 33, 0.20)",
-        card: "0px 4px 15.7px 0px #00000024",
+        card: "0px 12px 20px 0px #1B427B4D",
         image: "2px 4px 4px 0px #00000040"
+
 
       },
     },
   },
-  plugins: [
-    function ({ addUtilities }: any) {
-      addUtilities({
-        '.border-gradient': {
-          'border-image': 'linear-gradient(180deg, #DD2F2F 0%, #0EF516 46%, #0F88FA 100%)',
-          'border-image-slice': '1',
-          'border-radius': '1rem'
-        },
 
-      }, ['responsive', 'hover']);
-    },
-  ],
 };
 export default config;

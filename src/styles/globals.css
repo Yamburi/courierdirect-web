@@ -6,7 +6,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: "Archivo", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   scroll-behavior: smooth;
 }
@@ -46,7 +46,7 @@
   border: 0.5px solid #f7fafc;
 }
 .btn-primary {
-  background-color: #15679e;
+  background-color: #16437c;
   color: #ffffff;
 }
 .btn-contact {
@@ -101,11 +101,13 @@
 }
 
 .swiper-pagination-bullet {
-  width: 15px !important;
+  width: 25px !important;
   height: 6px !important;
   background-color: #fff !important;
   opacity: 0.5 !important;
-  margin: 0 4px !important;
+  border-radius: 25% !important;
+
+  /* margin: 0 4px !important; */
   border: 0.5px solid #fff !important;
   cursor: pointer !important;
 }
