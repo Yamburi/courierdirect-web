@@ -1,0 +1,102 @@
+import Image from "next/image";
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { TTestimonial } from "@/schemas/testimonial.schema";
+import { WEBSITE_BASE_URL } from "@/lib/config";
+interface TestimonialProps {
+  testimonialList: TTestimonial[];
+}
+const Testimonial: React.FC<TestimonialProps> = ({ testimonialList }) => {
+  return (
+    <div className="bg-background flex flex-col justify-center items-center py-10">
+      <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] text-webblack">
+        <div className="flex   flex-col gap-4 justify-center items-center">
+          <div className="text-primary w-[30rem] max-small:w-full text-3xl text-center font-semibold">
+            What Do Our Clients Say?
+          </div>
+
+          <div className="w-full relative">
+            <Swiper
+              modules={[Navigation, Autoplay, Pagination]}
+              spaceBetween={27}
+              slidesPerGroup={1}
+              slidesPerView={2}
+              navigation={{
+                nextEl: ".swiper-button-next-custom1",
+                prevEl: ".swiper-button-prev-custom1",
+              }}
+              loop
+              observer
+              observeParents
+              pagination={{
+                clickable: true,
+              }}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              autoHeight
+              className="w-full h-auto"
+              breakpoints={{
+                0: { slidesPerView: 1 },
+                900: { slidesPerView: 2 },
+              }}
+            >
+              {testimonialList.map((value) => (
+                <SwiperSlide key={value.id} className="h-full w-full pb-10">
+                  <div
+                    key={value.id}
+                    className="w-full py-5 px-10 h-auto  min-[900px]:h-[210px]   bg-white  border rounded-md  shadow-card"
+                  >
+                    <div className="flex flex-col gap-3">
+                      <div className="flex  items-center gap-3">
+                        <div className="h-[60px] w-[60px] rounded-full">
+                          <Image
+                            unoptimized
+                            width={1000}
+                            height={1000}
+                            className=" rounded-full w-full h-full object-contain"
+                            src={`${WEBSITE_BASE_URL}/testimonial/${value.image}`}
+                            alt={value.name}
+                          />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          <div className="flex gap-1 text-sm text-yellow-400">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <i
+                                key={i}
+                                className={`${
+                                  i < Math.floor(value?.rating ?? 5)
+                                    ? "fa-solid fa-star"
+                                    : "fa-regular fa-star"
+                                }`}
+                              ></i>
+                            ))}
+                          </div>
+                          <h2 className="text-xl font-bold text-primary">
+                            {value.name}, {value.designation}
+                          </h2>
+                        </div>
+                      </div>
+                      <p className="text-base leading-6  font-medium">
+                        {value.message}
+                      </p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <i className="swiper-button-prev-custom1 fa-regular fa-chevron-left rounded-full bg-white border-[1px] border-[#B4BEC8] h-[30px] w-[30px] flex justify-center items-center text-sm text-[#37383a] font-extrabold  cursor-pointer absolute top-[37%] left-[-1%] z-10 shadow-shadow"></i>
+            <i className="swiper-button-next-custom1 fa-regular fa-chevron-right rounded-full bg-white border-[1px] border-[#B4BEC8] h-[30px] w-[30px] flex justify-center items-center text-sm text-[#37383a]  font-extrabold  cursor-pointer absolute top-[37%] right-[-1%] z-10 shadow-shadow"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Testimonial;
