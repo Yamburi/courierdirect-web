@@ -13,9 +13,41 @@ const config: Config = {
       large: "1350px",
     },
     extend: {
-      colors: {
-        primary: "#1b1b1b",
+      borderImage: {
+        'gradient': 'linear-gradient(180deg, #DD2F2F 0%, #0EF516 46%, #0F88FA 100%) 1'
       },
+
+      animation: {
+        fadeInDown: 'fadeInDown 0.5s ease-out',
+        fadeOutUp: 'fadeOutUp 0.5s ease-in',
+      },
+      keyframes: {
+        fadeInDown: {
+          '0%': { opacity: '0', transform: 'translateY(-20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeOutUp: {
+          '0%': { opacity: '1', transform: 'translateY(0)' },
+          '100%': { opacity: '0', transform: 'translateY(-20px)' },
+        },
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'custom-gradient': 'linear-gradient(180deg, #1B88D3 24%, #9A72F8 100%)',
+
+        "abouttop": 'linear-gradient(180deg, #4C94E9 0%, #7F2B83 64%)'
+
+
+      },
+      colors: {
+        primary: "#16437C",
+        secondary: "#821518",
+        background: "#F4f4f4",
+        webblack: "#443D3D"
+      },
+
       width: {
         content: "1250px",
       },
@@ -28,6 +60,17 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: any) {
+      addUtilities({
+        '.border-gradient': {
+          'border-image': 'linear-gradient(180deg, #DD2F2F 0%, #0EF516 46%, #0F88FA 100%)',
+          'border-image-slice': '1',
+          'border-radius': '1rem'
+        },
+
+      }, ['responsive', 'hover']);
+    },
+  ],
 };
 export default config;
