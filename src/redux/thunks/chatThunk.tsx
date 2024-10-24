@@ -8,10 +8,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const insertChat = createAsyncThunk<
   TChatDetail,
-  { data: TChatInsertSchema }
->("insertChat", async ({ data }) => {
+  { data: TChatInsertSchema; callback?: () => void }
+>("insertChat", async ({ data, callback }) => {
   try {
     const response = await doPost(`/web/chat`, data);
+    callback?.();
     return response;
   } catch (error) {
     throw error;

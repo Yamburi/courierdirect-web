@@ -55,7 +55,7 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="absolute top-0 right-0 bottom-0 left-0 inset-0 bg-black bg-opacity-45 flex justify-center items-center large:px-0 medium:px-[2.5rem] px-[1.5rem]">
+      <div className="absolute top-0 right-0 bottom-0 left-0 inset-0 bg-black bg-opacity-35 flex justify-center items-center large:px-0 medium:px-[2.5rem] px-[1.5rem]">
         <div className="relative gap-3 flex flex-col justify-center items-center  z-10 opacity-100 text-center">
           <h1 className="text-3xl text-white">Track Your Parcel</h1>
           <p className="text-2xl font-thin text-white">
