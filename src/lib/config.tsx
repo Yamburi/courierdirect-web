@@ -1,5 +1,6 @@
 const API_BASE_URL = "https://courier-api.yamburi.co.za/api";
 const WEBSITE_BASE_URL = "https://courier-api.yamburi.co.za";
+const SITE_URL = "https://www.courierdirect.com";
 // const API_BASE_URL = "http://192.168.1.69:8001/api/v1";
 // const WEBSITE_BASE_URL = "http://192.168.1.69:8001";
 const PERSIST_VERSION = 1;
@@ -11,6 +12,7 @@ const FEATURE_FLAGS = {
 
 export {
   API_BASE_URL,
+  SITE_URL,
   PERSIST_KEY,
   PERSIST_VERSION,
   FEATURE_FLAGS,
