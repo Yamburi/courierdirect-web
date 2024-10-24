@@ -20,6 +20,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import storage from "redux-persist/lib/storage";
 
 import contactReducer from "./slice/contactSlice";
+import chatReducer from "./slice/chatSlice";
 
 const persistConfig = {
   key: PERSIST_KEY,
@@ -30,6 +31,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   contactState: contactReducer,
+  chatState: chatReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

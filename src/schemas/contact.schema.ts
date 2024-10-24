@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { booleanField, emailField, positiveNumberField, stringField } from "./global.schema"
+import { emailField, positiveNumberField, stringField } from "./global.schema"
 
 export const contactResponseSchema = z.object({
     id: stringField("Id"),
@@ -7,7 +7,7 @@ export const contactResponseSchema = z.object({
     email: emailField("Email"),
     phone: positiveNumberField("Phone"),
     message: stringField("Message"),
-    seen: stringField(" Seen"),
+    seen: stringField("Seen"),
     created_at: stringField("Created At"),
     updated_at: stringField("Updated at")
 })
@@ -19,6 +19,6 @@ export const contactSchema = z.object({
     email: emailField("Email"),
     phone: stringField("Phone No."),
     message: stringField("Message"),
-    
+
 })
 export type TContact = z.infer<typeof contactSchema>
