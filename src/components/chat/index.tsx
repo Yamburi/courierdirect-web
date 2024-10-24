@@ -218,10 +218,10 @@ const Chat = () => {
               </div>
             </div>
           ) : (
-            <div className="absolute w-[300px] bottom-[105%] right-0 rounded-b-xl bg-white max-h-[400px] overflow-auto">
+            <div className="absolute w-[300px] bottom-[105%] right-0 rounded-b-xl bg-white max-h-[400px] overflow-auto shadow-card">
               <div className="bg-primary text-white text-base leading-6 p-4">
-                Please fill out the form below to start chatting with the next
-                available agent.
+                Welcome to Courier Direct Please fill out the form below to
+                start chatting with us.
               </div>
               <div className="flex flex-col gap-4 p-4">
                 <UIInput
