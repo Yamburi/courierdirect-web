@@ -59,7 +59,7 @@ const Navbar = () => {
           <nav className="max-[900px]:hidden flex gap-6 items-center">
             <Link href="/">Home</Link>
 
-            <Link href="/services">Services</Link>
+            <Link href="/service">Services</Link>
 
             <Link href="/faq">FAQ</Link>
             <Link href="/contact-us">Contact Us</Link>
