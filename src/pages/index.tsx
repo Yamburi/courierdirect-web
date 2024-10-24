@@ -10,13 +10,18 @@ import WhyChooseUs from "./home/why-us";
 import Aim from "./home/aim";
 import { TContent } from "@/schemas/content.schema";
 import AboutUs from "./home/aboutus";
+import WeAccept from "./home/weaccept";
+import Testimonial from "./home/testimonial";
+import { TTestimonial } from "@/schemas/testimonial.schema";
 interface HomeProps {
   slider: TSlider[];
-  service: TService[];
+  
   whychoous: TWhyChooseUs[];
   content: TContent[];
+  testimonial: TTestimonial[];
+
 }
-export default function Home({ slider, whychoous, content }: HomeProps) {
+export default function Home({ slider, whychoous, content,testimonial }: HomeProps) {
   return (
     <div>
       <main>
@@ -26,6 +31,8 @@ export default function Home({ slider, whychoous, content }: HomeProps) {
           <WhyChooseUs whychooseusList={whychoous?.slice(0, 3)} />
           <Aim aimContent={content} />
           <AboutUs aboutContent={content} />
+          <WeAccept/>
+<Testimonial testimonialList={testimonial} />
         </div>
         <Footer />
       </main>
@@ -34,16 +41,17 @@ export default function Home({ slider, whychoous, content }: HomeProps) {
 }
 export async function getServerSideProps() {
   const sliders = await axios.get(`${API_BASE_URL}/web/slider`);
-  // const services = await axios.get(`${API_BASE_URL}/web/service`);
   const whychoouss = await axios.get(`${API_BASE_URL}/web/why-us`);
   const contents = await axios.get(`${API_BASE_URL}/web/content`);
-
+  const testimonials = await axios.get(`${API_BASE_URL}/web/testimonial`);
   return {
     props: {
       slider: sliders?.data?.data,
       // service: services?.data?.data,
       whychoous: whychoouss?.data?.data,
       content: contents?.data?.data,
+      testimonial: testimonials?.data?.data,
+
     },
     // revalidate: 10,
   };
