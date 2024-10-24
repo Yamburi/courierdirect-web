@@ -4,7 +4,6 @@ import { TSlider } from "@/schemas/slider.schema";
 import Slider from "./home/slider";
 import { API_BASE_URL } from "@/lib/config";
 import axios from "axios";
-import { TService } from "@/schemas/service.schema";
 import { TWhyChooseUs } from "@/schemas/whychooseus.schema";
 import WhyChooseUs from "./home/why-us";
 import Aim from "./home/aim";

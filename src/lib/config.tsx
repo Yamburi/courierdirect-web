@@ -1,10 +1,10 @@
 const API_BASE_URL = "https://courier-api.yamburi.co.za/api";
 const WEBSITE_BASE_URL = "https://courier-api.yamburi.co.za";
 const SITE_URL = "https://www.courierdirect.com";
-// const API_BASE_URL = "http://192.168.1.69:8001/api/v1";
-// const WEBSITE_BASE_URL = "http://192.168.1.69:8001";
+// const API_BASE_URL = "http://124.0.0.1:4400/api";
+// const WEBSITE_BASE_URL = "http://124.0.0.1:4400";
 const PERSIST_VERSION = 1;
-const PERSIST_KEY = "yamburiir-web";
+const PERSIST_KEY = "courier-direct-web";
 const FEATURE_FLAGS = {
   newFeature: true,
   experimentalFeature: true,
