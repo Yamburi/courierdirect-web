@@ -13,15 +13,20 @@ import AboutUs from "./home/aboutus";
 import WeAccept from "./home/weaccept";
 import Testimonial from "./home/testimonial";
 import { TTestimonial } from "@/schemas/testimonial.schema";
+import Chat from "@/components/chat";
 interface HomeProps {
   slider: TSlider[];
-  
+
   whychoous: TWhyChooseUs[];
   content: TContent[];
   testimonial: TTestimonial[];
-
 }
-export default function Home({ slider, whychoous, content,testimonial }: HomeProps) {
+export default function Home({
+  slider,
+  whychoous,
+  content,
+  testimonial,
+}: HomeProps) {
   return (
     <div>
       <main>
@@ -31,9 +36,10 @@ export default function Home({ slider, whychoous, content,testimonial }: HomePro
           <WhyChooseUs whychooseusList={whychoous?.slice(0, 3)} />
           <Aim aimContent={content} />
           <AboutUs aboutContent={content} />
-          <WeAccept/>
-<Testimonial testimonialList={testimonial} />
+          <WeAccept />
+          <Testimonial testimonialList={testimonial} />
         </div>
+        <Chat />
         <Footer />
       </main>
     </div>
@@ -51,7 +57,6 @@ export async function getServerSideProps() {
       whychoous: whychoouss?.data?.data,
       content: contents?.data?.data,
       testimonial: testimonials?.data?.data,
-
     },
     // revalidate: 10,
   };

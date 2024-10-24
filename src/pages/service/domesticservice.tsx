@@ -1,7 +1,5 @@
 import ServiceCard from "@/components/service";
-import { PARCEL } from "@/constants/images";
 import { TService } from "@/schemas/service.schema";
-import Image from "next/image";
 
 import React from "react";
 interface ServiceProps {
@@ -29,8 +27,6 @@ const DomesticService: React.FC<ServiceProps> = ({ serviceList }) => {
           </div>
         </div>
       </div>
-
-      
     </>
   );
 };

@@ -1,8 +1,6 @@
-import ServiceCard from "@/components/service";
 import ServiceDetailCard from "@/components/servicedetails";
 
 import { TServiceDetail } from "@/schemas/servicedetail.schema";
-import Image from "next/image";
 
 import React from "react";
 interface ServiceProps {
@@ -15,10 +13,10 @@ const ServiceDescription: React.FC<ServiceProps> = ({ serviceDetailList }) => {
         <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] text-webblack">
           <div className="flex flex-col gap-2 justify-center items-center">
             <div className="text-secondary w-[30rem] max-small:w-full text-3xl left-8 text-center font-semibold">
-            Service Details
+              Service Details
             </div>
             <div className="text-base  w-[30rem] max-small:hidden text-center leading-6 ">
-            Prompt, Reliable, and Secure Deliveries
+              Prompt, Reliable, and Secure Deliveries
             </div>
           </div>
 
@@ -30,8 +28,6 @@ const ServiceDescription: React.FC<ServiceProps> = ({ serviceDetailList }) => {
           </div>
         </div>
       </div>
-
-      
     </>
   );
 };

@@ -6,8 +6,7 @@ import DomesticService from "./domesticservice";
 import { API_BASE_URL } from "@/lib/config";
 import axios from "axios";
 import { TService } from "@/schemas/service.schema";
-import { PARCEL } from "@/constants/images";
-import Image from "next/image";
+
 import ServiceDescription from "./servicedescription";
 import { TServiceDetail } from "@/schemas/servicedetail.schema";
 import Contact from "./contact";
@@ -23,11 +22,11 @@ const ServiceIndex = ({ service, servicedetail }: ServiceProps) => {
       <ServiceLanding />
       <div className="bg-gray-100 flex flex-col gap-10 py-10">
         <DomesticService serviceList={service} />
-        <Partition/>
+        <Partition />
         <ServiceDescription serviceDetailList={servicedetail} />
-        <Partition/>
-        
-        <Contact/>
+        <Partition />
+
+        <Contact />
       </div>
       <Footer />
     </div>
