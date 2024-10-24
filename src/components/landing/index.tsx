@@ -1,4 +1,3 @@
-
 import { LANDING } from "@/constants/images";
 import Image from "next/image";
 import React from "react";
@@ -19,10 +18,10 @@ const LandingPage: React.FC<Landingprops> = ({ title, subtitle }) => {
         />
       </div>
       <div className="absolute inset-0 flex flex-col gap-3 justify-center items-center">
-        <h2 className="text-4xl text-white font-semibold flex justify-center items-center">
+        <h2 className="text-4xl max-small:text-[3xl] text-white font-semibold flex justify-center items-center">
           {title}
         </h2>
-        <p className="text-white leading-8 w-[50%] text-center text-lg font-thin flex justify-center items-center">
+        <p className="text-white leading-8 w-[50%] max-small:w-[75%] text-center text-lg font-thin flex justify-center items-center">
           {subtitle}
         </p>
       </div>

@@ -1,3 +1,4 @@
+import Chat from "@/components/chat";
 import { LOGO } from "@/constants/images";
 import { SITE_URL } from "@/lib/config";
 import store, { persistor } from "@/redux/store";
@@ -52,6 +53,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <meta property="og:type" content="website" />
           </Head>
           <Component {...pageProps} />
+          <Chat />
         </PersistGate>
       </Provider>
     </>

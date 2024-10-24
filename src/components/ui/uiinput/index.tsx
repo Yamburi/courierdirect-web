@@ -56,10 +56,7 @@ export default function UIInput({
       style={style}
     >
       {label && (
-        <label
-          htmlFor={id ?? ""}
-          className="text-[#636568] text-base font-medium"
-        >
+        <label htmlFor={id ?? ""} className="text-[#636568] text-sm font-bold">
           {label} {isRequired ? "*" : ""}
         </label>
       )}
@@ -68,8 +65,8 @@ export default function UIInput({
         type={type === "password" ? (show ? "text" : "password") : type}
         id={id}
         name={name}
-        className={`p-2  rounded-[4px] h-10 w-full outline-none text-base bg-white text-[#636568] placeholder-opacity-30 border focus:border-secondary ${
-          error ? "border-red-500" : "border-[#B4BEC8]"
+        className={`p-2  rounded-[4px] h-10 w-full outline-none text-base bg-gray-200 border-gray-300 text-[#636568] placeholder-opacity-30 border focus:border-secondary ${
+          error ? "border-red-500" : ""
         } ${type === "date" ? "date-picker" : ""} ${
           readOnly ? "opacity-70" : ""
         }`}

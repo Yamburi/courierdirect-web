@@ -12,7 +12,6 @@ import AboutUs from "./home/aboutus";
 import WeAccept from "./home/weaccept";
 import Testimonial from "./home/testimonial";
 import { TTestimonial } from "@/schemas/testimonial.schema";
-import Chat from "@/components/chat";
 interface HomeProps {
   slider: TSlider[];
 
@@ -38,7 +37,6 @@ export default function Home({
           <WeAccept />
           <Testimonial testimonialList={testimonial} />
         </div>
-        <Chat />
         <Footer />
       </main>
     </div>

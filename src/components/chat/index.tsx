@@ -155,11 +155,14 @@ const Chat = () => {
 
         {showChat &&
           userId &&
-          (chatData?.data?.length === 0 ? (
+          (chatData?.data?.length > 0 ? (
             <div className="absolute w-[300px] bottom-[105%] right-0 rounded-xl bg-white shadow-card">
               <div className="bg-secondary text-white text-base leading-6 p-4 flex justify-between items-center rounded-t-xl ">
                 <h2>Courier Direct</h2>
-                <i className="fa-regular fa-times"></i>
+                <i
+                  className="fa-regular fa-times"
+                  onClick={() => setShowChat(false)}
+                ></i>
               </div>
               <div className="flex flex-col gap-4 p-4 h-[300px] max-h-[300px] overflow-auto "></div>
               <div className="flex justify-center items-center m-4 rounded-xl shadow-card border-[2px] border-secondary relative">
@@ -215,8 +218,8 @@ const Chat = () => {
               </div>
             </div>
           ) : (
-            <div className="absolute w-[300px] bottom-[105%] right-0 rounded-xl bg-white max-h-[400px] overflow-auto">
-              <div className="bg-primary text-white text-base leading-6 p-4 rounded-t-xl">
+            <div className="absolute w-[300px] bottom-[105%] right-0 rounded-b-xl bg-white max-h-[400px] overflow-auto">
+              <div className="bg-primary text-white text-base leading-6 p-4">
                 Please fill out the form below to start chatting with the next
                 available agent.
               </div>

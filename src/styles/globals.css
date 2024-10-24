@@ -17,14 +17,14 @@
 }
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 0.5rem !important;
+  /* border-radius: 0.5rem !important; */
 }
 ::-webkit-scrollbar-thumb {
-  border-radius: 0.5rem !important;
-  background: #68bbe3;
+  /* border-radius: 0.5rem !important; */
+  background: #16437c;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #15679e;
+  background: #16437c;
 }
 
 .btn {
@@ -42,7 +42,7 @@
 }
 .btn-plain {
   background-color: #ffffff;
-  color: #15679e;
+  color: #16437c;
   border: 0.5px solid #f7fafc;
 }
 .btn-primary {
@@ -55,7 +55,7 @@
 }
 .btn-primary.duotone {
   background-color: rgba(7, 126, 162, 0.3);
-  color: #15679e;
+  color: #16437c;
 }
 .btn-error {
   background-color: #ff6b6b;
@@ -83,11 +83,11 @@
 }
 .btn-secondary {
   background-color: #ffffff;
-  color: #15679e;
-  border: 0.5px solid #15679e;
+  color: #16437c;
+  border: 0.5px solid #16437c;
 }
 .btn-link {
-  color: #15679e;
+  color: #16437c;
   text-decoration: underline;
   height: -moz-max-content !important;
   height: max-content !important;
@@ -103,12 +103,12 @@
 .swiper-pagination-bullet {
   width: 25px !important;
   height: 6px !important;
-  background-color: #fff !important;
+  background-color: #353333 !important;
   opacity: 0.5 !important;
   border-radius: 25% !important;
 
   /* margin: 0 4px !important; */
-  border: 0.5px solid #fff !important;
+  border: 0.5px solid #353333 !important;
   cursor: pointer !important;
 }
 
@@ -116,13 +116,13 @@
   opacity: 1 !important;
   width: 25px !important;
   border-radius: 25% !important;
-  border: 0.5px solid #15679e !important;
+  border: 0.5px solid #16437c !important;
 
-  background-color: #15679e !important;
+  background-color: #16437c !important;
 }
 
 .date-picker::-webkit-calendar-picker-indicator {
-  background-color: #15679e;
+  background-color: #16437c;
   border-radius: 0.25rem;
 }
 
@@ -143,7 +143,7 @@
 
 .carttable th {
   border-bottom: 1px solid #d3d3d3;
-  background: #15679e;
+  background: #16437c;
   color: white;
   padding: 1rem;
   font-size: 1.1rem;
@@ -151,5 +151,5 @@
 }
 
 .input[type="checkbox"] {
-  accent-color: #15679e;
+  accent-color: #16437c;
 }

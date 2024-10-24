@@ -1,10 +1,11 @@
+import Link from "next/link";
 import React from "react";
 
 const ContactDetail = () => {
   return (
     <div className=" flex flex-col justify-center items-center mt-7">
       <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] text-webblack">
-        <div className="grid large:grid-cols-3  small:grid-cols-2 max-small:grid-cols-1 gap-7">
+        <div className="grid large:grid-cols-3  small:grid-cols-2 max-small:grid-cols-1 gap-10">
           <div className="relative bg-gray-200 rounded-xl  ">
             <div className="flex flex-col gap-1 py-5 pl-9">
               <p>
@@ -20,10 +21,8 @@ const ContactDetail = () => {
 
           <div className="relative bg-gray-200 rounded-xl  ">
             <div className="flex flex-col gap-1 py-5 pl-9">
-              <p>
-              Tel: (012) 657 1985 <br />
-              Fax: 086 661 1237
-              </p>
+              <Link href="0126571985">Tel: (012) 657 1985 </Link>
+              <p>Fax: 086 661 1237</p>
               <div className="font-bold">Call Support</div>
             </div>
             <div className="absolute -top-7 -left-3">
@@ -33,9 +32,9 @@ const ContactDetail = () => {
 
           <div className="relative bg-gray-200 rounded-xl flex items-center   ">
             <div className="flex flex-col gap-1 py-5 pl-9">
-              <p>
-              info@courierdirect.com
-              </p>
+              <Link href="mailto:info@courierdirect.com">
+                info@courierdirect.com
+              </Link>
               <div className="font-bold">E-Mail</div>
             </div>
             <div className="absolute -top-7 -left-3">

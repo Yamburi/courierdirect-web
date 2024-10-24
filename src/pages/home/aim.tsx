@@ -9,7 +9,7 @@ const Aim: React.FC<aimProps> = ({ aimContent }) => {
   return (
     <div className="flex flex-col  justify-center items-center  ">
       <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] ">
-        <div className="flex gap-7 px-14 py-2 max-small:p-4 text-webblack bg-white justify-center items-center max-[900px]:flex-col shadow-slider rounded-xl">
+        <div className="flex gap-7 px-14 py-2 max-small:p-4 text-webblack bg-white justify-center items-center max-[900px]:flex-col max-[900px]:gap-4 shadow-slider rounded-xl">
           <div className="flex flex-col flex-1 gap-4 pt-10 max-small:pt-5">
             <h2 className="text-4xl text-secondary font-bold max-[900px]:text-center max-small:text-3xl">
               Our Aim

@@ -20,7 +20,7 @@ const ServiceDescription: React.FC<ServiceProps> = ({ serviceDetailList }) => {
             </div>
           </div>
 
-          <div className="grid large:grid-cols-2  small:grid-cols-2 max-small:grid-cols-1 gap-7  mt-10">
+          <div className="grid large:grid-cols-2  medium:grid-cols-2 grid-cols-1 gap-7  mt-10">
             {Array.isArray(serviceDetailList) &&
               serviceDetailList?.map((value, i) => (
                 <ServiceDetailCard data={value} key={i} />

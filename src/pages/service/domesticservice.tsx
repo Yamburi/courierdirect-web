@@ -19,7 +19,7 @@ const DomesticService: React.FC<ServiceProps> = ({ serviceList }) => {
             </div>
           </div>
 
-          <div className="grid large:grid-cols-2  small:grid-cols-2 max-small:grid-cols-1   gap-20 mt-10">
+          <div className="grid large:grid-cols-2  small:grid-cols-2 max-small:grid-cols-1   gap-20 max-small:gap-4 max-medium:gap-8 mt-10">
             {Array.isArray(serviceList) &&
               serviceList?.map((value, i) => (
                 <ServiceCard data={value} key={i} />

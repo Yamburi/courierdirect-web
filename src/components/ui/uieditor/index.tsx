@@ -1,5 +1,4 @@
 import JoditEditor, { Jodit } from "jodit-react";
-import dynamic from "next/dynamic";
 import {
   CSSProperties,
   ChangeEvent,
@@ -72,8 +71,8 @@ export default function UITextEditor({
           rows={rows ?? 10}
           value={defaultValue ?? ""}
           className={`p-2 border ${
-            error ? "border-red-500" : "border-[#B4BEC8]"
-          } rounded-[4px] outline-none bg-white text-[#636568] w-full text-base resize-y focus:border-primary`}
+            error ? "border-red-500" : ""
+          } rounded-[4px] outline-none bg-gray-200 border-gray-300 text-[#636568] w-full text-base resize-y focus:border-primary`}
           onChange={onChange}
           required={isRequired}
         ></textarea>

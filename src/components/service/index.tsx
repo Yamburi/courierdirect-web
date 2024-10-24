@@ -10,7 +10,7 @@ interface ServiceCardProps {
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ data }) => {
   return (
-    <div className="relative w-full h-max   group text-webblack">
+    <div className="relative w-full   group text-webblack">
       {/* Card content */}
       <div className=" flex flex-col gap-5  p-5 justify-center items-center ">
         <div className="h-[75px] w-[75px] rounded-full flex ">

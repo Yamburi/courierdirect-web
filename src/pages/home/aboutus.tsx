@@ -9,7 +9,7 @@ const AboutUs: React.FC<aimProps> = ({ aboutContent }) => {
   return (
     <div className="flex flex-col  justify-center items-center  ">
       <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] ">
-        <div className="flex gap-7 px-14 py-2 max-small:p-4 text-webblack bg-white justify-center items-center max-[900px]:flex-col-reverse shadow-slider rounded-xl">
+        <div className="flex gap-7 px-14 py-2 max-small:p-4 text-webblack bg-white justify-center items-center max-[900px]:flex-col-reverse max-[900px]:gap-4 shadow-slider rounded-xl">
           <div className="h-[400px] max-[900px]:h-[300px] min-[900px]:flex-1">
             <Image
               src={ABOUTUS}

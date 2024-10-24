@@ -32,7 +32,14 @@ const WeAccept = () => {
         <div className="grid large:grid-cols-4 min-[900px]:grid-cols-3 small:grid-cols-2 max-small:grid-cols-1  gap-8 mt-10">
           {Array.isArray(payList) &&
             payList?.map((value, i) => (
-              <Image width={1000} height={1000} src={value.image} alt="" className="h-[130px]  object-contain" />
+              <Image
+                width={1000}
+                height={1000}
+                src={value.image}
+                alt=""
+                className="h-[120px]  object-contain"
+                key={i}
+              />
             ))}
         </div>
       </div>
