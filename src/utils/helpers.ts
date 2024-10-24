@@ -122,3 +122,16 @@ export const parseJSONData = <T extends Record<string, any>>(data: T): Partial<T
 
   return parsedData;
 };
+
+export const generateUniqueUserId = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const dateString = `${year}${month}${day}`;
+
+  const randomNumber = Math.floor(100000 + Math.random() * 900000);
+
+  return `${dateString}-${randomNumber}`;
+};

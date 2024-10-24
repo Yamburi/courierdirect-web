@@ -2,6 +2,7 @@ import { LOGO } from "@/constants/images";
 import { SITE_URL } from "@/lib/config";
 import store, { persistor } from "@/redux/store";
 import "@/styles/globals.css";
+import { generateUserId, getUserIdFromLocalStorage } from "@/utils/local";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
@@ -10,6 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/integration/react";
 
 export default function App({ Component, pageProps }: AppProps) {
+  generateUserId();
+  const userId = getUserIdFromLocalStorage();
+  console.log(userId);
   return (
     <>
       <Provider store={store}>
