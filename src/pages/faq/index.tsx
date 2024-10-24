@@ -1,30 +1,28 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import React from "react";
-import ServiceLanding from "./landing";
+
 
 import { API_BASE_URL } from "@/lib/config";
 import axios from "axios";
-import { TService } from "@/schemas/service.schema";
-import { PARCEL } from "@/constants/images";
-import Image from "next/image";
-import ServiceDescription from "./servicedescription";
-import { TServiceDetail } from "@/schemas/servicedetail.schema";
-import Contact from "./contact";
+import { TFaq } from "@/schemas/faq.schema";
+
+
+
 import FaqLanding from "./landing";
 import FaqContent from "./faqcontent";
 import Partition from "@/components/partition";
 interface ServiceProps {
-  service: TService[];
-  servicedetail: TServiceDetail[];
+  faq: TFaq[];
+  
 }
-const ServiceIndex = ({ service, servicedetail }: ServiceProps) => {
+const FaqIndex = ({ faq }: ServiceProps) => {
   return (
     <div>
       <Navbar />
       <FaqLanding />
       <div className="bg-gray-100 flex flex-col gap-10 py-10">
-        <FaqContent/>
+        <FaqContent faqList={faq} />
         <Partition/>
         </div>
 
@@ -33,15 +31,15 @@ const ServiceIndex = ({ service, servicedetail }: ServiceProps) => {
   );
 };
 
-export default ServiceIndex;
+export default FaqIndex;
 export async function getServerSideProps() {
-  const services = await axios.get(`${API_BASE_URL}/web/service`);
-  const servicedetails = await axios.get(`${API_BASE_URL}/web/service-detail`);
+  const faqs = await axios.get(`${API_BASE_URL}/web/faq`);
+ 
 
   return {
     props: {
-      service: services?.data?.data,
-      servicedetail: servicedetails?.data?.data,
+      faq: faqs?.data?.data,
+      
     },
   };
 }
