@@ -5,6 +5,8 @@ export const contentSchema = z.object({
     id: stringField("Id"),
     aim: stringField("Aim"),
     about: stringField("About"),
+    privacy: stringField("Privacy"),
+    toc: stringField("Toc"),
     created_at: stringField("Created At"),
     updated_at: stringField("Updated at")
 })
