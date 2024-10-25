@@ -37,7 +37,7 @@ const WeAccept = () => {
                 height={1000}
                 src={value.image}
                 alt=""
-                className="h-[120px]  object-contain"
+                className="h-[120px] first:py-4   object-contain"
                 key={i}
               />
             ))}

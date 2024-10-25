@@ -97,12 +97,11 @@
   height: 450px !important;
 }
 
-@media screen and (max-width: 575px) {
+/* @media screen and (max-width: 575px) {
   .landingSlider {
     height: auto !important;
-    padding: 5rem 0rem;
   }
-}
+} */
 
 .swiper-pagination {
   position: absolute;
