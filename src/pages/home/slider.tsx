@@ -36,10 +36,10 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
           disableOnInteraction: false,
         }}
         autoHeight
-        className="w-full h-auto shadow-slider"
+        className="w-full h-[450px] shadow-slider landingSlider"
       >
         {sliderList.map((value) => (
-          <SwiperSlide key={value.id} className="h-full w-full">
+          <SwiperSlide key={value.id} className="h-[450px] w-full">
             <Link href={value.link ?? "#"} className=" h-auto w-full">
               <Image
                 loading="lazy"
@@ -49,7 +49,7 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
                 quality={100}
                 unoptimized
                 src={`${WEBSITE_BASE_URL}/slider/${value?.image}`}
-                className="h-[450px] w-full object-cover"
+                className="h-full w-full object-cover"
               />
             </Link>
           </SwiperSlide>
