@@ -25,6 +25,7 @@ const Chat = () => {
   const dispatch = useAppDispatch();
   const [showHelp, setShowHelp] = useState<boolean>(true);
   const [showChat, setShowChat] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<Partial<TChatInsertSchema>>({
     user_id: userId ?? "",
@@ -161,6 +162,10 @@ const Chat = () => {
             formData.append("image", file[i]);
           }
         }
+        setIsDisabled(true);
+        setTimeout(() => {
+          setIsDisabled(false);
+        }, 5000);
         dispatch(
           replyToChat({
             data: formData,
@@ -398,11 +403,13 @@ const Chat = () => {
                   name="replyText"
                   value={replyText}
                   onChange={(e) => setReplyText(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && handleReplyChat()}
+                  onKeyPress={(e) =>
+                    e.key === "Enter" && !isDisabled && handleReplyChat()
+                  }
                 />
                 <i
                   className="bg-secondary flex justify-center items-center w-[4rem] h-[3rem]  rounded-r-xl text-white text-base fa-solid fa-chevron-right"
-                  onClick={handleReplyChat}
+                  onClick={() => !isDisabled && handleReplyChat()}
                 ></i>
               </div>
             </div>
