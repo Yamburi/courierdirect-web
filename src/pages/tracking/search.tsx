@@ -1,8 +1,31 @@
+import ServiceDetailCard from "@/components/servicedetails";
 import { TrackBanner } from "@/constants/images";
 import Image from "next/image";
 import React from "react";
 
 const Search = () => {
+    const trackList=[
+        {
+           icon:"truck-fast",
+           name:"August 24, 2024 11:23 PM ",
+           description:"Item Dispatched for delivery"
+        },
+        {
+            icon:"warehouse",
+            name:"August 24, 2024 11:23 PM ",
+            description:"Item arrived at our warehouse"
+         },
+         {
+            icon:"truck-pickup",
+            name:"August 24, 2024 11:23 PM ",
+            description:"Item Dispatched for deliveryItem picked and dispatched to warehouse"
+         },
+         {
+            icon:"spinner",
+            name:"August 24, 2024 11:23 PM ",
+            description:"Item processed with item details and user details"
+         },
+    ]
   return (
     <div className=" flex flex-col justify-center items-center ">
       <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] text-webblack">
@@ -50,27 +73,47 @@ const Search = () => {
           </div>
 
           <div className="flex justify-between gap-10 max-[900px]:flex-col">
-          <div className="flex flex-col gap-2 flex-1">
-           kkk
-          </div>
-          <div className="border-[#D7C9CE] border-x max-[900px]:hidden"></div>
+            <div className="flex flex-1 gap-2 ">
+              <div className="">g</div>
+              <div className="flex flex-col gap-2 w-full ">
+                <div className="py-3 px-3 bg-[#F3E8E8] rounded-xl shadow-lg  flex gap-5 items-center">
+                  <i className="fa-solid fa-chevron-down"></i>
+                  <div className="">Shipment summary</div>
+                </div>
+                <div className="flex flex-col gap-2">
+                {Array.isArray(trackList) &&
+              trackList?.map((value, i) => (
+                <ServiceDetailCard data={value} key={i} />
+              ))}
+                </div>
+              </div>
+            </div>
+            <div className="border-[#D7C9CE] border-x max-[900px]:hidden"></div>
 
-          <div className="flex flex-col gap-2 flex-1 ">
-       
-        <div className="relative">
-      <div className=" h-[475px] w-[430px]  bg-black">
-        <Image
-          className="w-full h-full object-cover absolute opacity-65 bg-black"
-           src={TrackBanner} alt="TrackBanner"
-          unoptimized
-        />
-      </div>
-      <div className="absolute inset-0 flex flex-col gap-3 justify-center items-center">
-      hjtgyth
-      </div>
-    </div>
+            <div className="flex flex-col justify-center items-center gap-2 flex-1 ">
+              <div className="relative">
+                <div className=" h-[475px] rounded-2xl w-[430px]  bg-black">
+                  <Image
+                    className="w-[430px] rounded-2xl  h-full object-cover absolute opacity-65 bg-black"
+                    src={TrackBanner}
+                    alt="TrackBanner"
+                    unoptimized
+                  />
+                </div>
+                <div className="absolute inset-0 text-white flex flex-col gap-3 justify-center items-center">
+                  <div className="text-2xl font-medium">Ad Banner</div>
+                  <p className="text-sm p-5 text-center">
+                    Lorem ipsum dolor sit amet consectetur. Morbi sem urna
+                    egestas vitae semper nullam dui mauris egestas. Sed quis
+                    neque quisque feugiat mi vestibulum posuere accumsan
+                    viverra. Congue elementum ante eget sit. Porta orci aenean
+                    sit dignissim. Vestibulum tellus elit elementum duis a
+                    vitae.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

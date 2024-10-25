@@ -79,7 +79,7 @@ const Navbar = () => {
             <Link href="/faq">FAQ</Link>
             <Link href="/contact-us">Contact Us</Link>
             <UIButton
-              href=""
+              href="/tracking"
               type="primary"
               label={
                 <span>
