@@ -29,7 +29,7 @@ const WeAccept = () => {
           </div>
         </div>
 
-        <div className="grid large:grid-cols-4 min-[900px]:grid-cols-3 small:grid-cols-2 max-small:grid-cols-1  gap-8 mt-10">
+        <div className="flex flex-wrap justify-evenly   gap-10 mt-10">
           {Array.isArray(payList) &&
             payList?.map((value, i) => (
               <Image
@@ -37,7 +37,7 @@ const WeAccept = () => {
                 height={1000}
                 src={value.image}
                 alt=""
-                className="h-[120px] first:py-4   object-contain"
+                className="h-[80px] w-[280px] first:py-2  object-contain "
                 key={i}
               />
             ))}
