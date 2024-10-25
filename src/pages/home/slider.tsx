@@ -49,7 +49,7 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
                 quality={100}
                 unoptimized
                 src={`${WEBSITE_BASE_URL}/slider/${value?.image}`}
-                className="h-[80vh] w-full object-cover"
+                className="h-[450px] w-full object-cover"
               />
             </Link>
           </SwiperSlide>
