@@ -69,7 +69,7 @@ const Footer = () => {
               </div>
               <div className="text-base relative flex flex-col gap-2">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14370.02468684167!2d28.104816!3d-25.78687!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e957db9d6cc6ddf%3A0x55b47a6e71351e5c!2sYamburi!5e0!3m2!1sen!2snp!4v1729260624543!5m2!1sen!2snp"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3588.0978666605474!2d28.139438074392885!3d-25.93201115294199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956f917b113747%3A0x73e38d52803f91bc!2sCOURIER%20DIRECT!5e0!3m2!1sen!2snp!4v1729861365213!5m2!1sen!2snp"
                   height="150"
                   className="rounded-xl max-small:w-full"
                   allowFullScreen={true}
