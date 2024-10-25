@@ -43,8 +43,8 @@ const Footer = () => {
                 <Link href="/service">Services</Link>
                 <Link href="/faq">FAQs</Link>
                 <Link href="/contact-us">Contact Us</Link>
-                <Link href="">Terms and Conditions</Link>
-                <Link href="">Privacy Policy</Link>
+                <Link href="/terms-conditions">Terms and Conditions</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </div>
             </div>
             <div className="flex-1 flex flex-col w-full gap-4 max-medium:items-center">

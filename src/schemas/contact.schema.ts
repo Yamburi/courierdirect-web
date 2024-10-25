@@ -7,6 +7,8 @@ export const contactResponseSchema = z.object({
     email: emailField("Email"),
     phone: positiveNumberField("Phone"),
     message: stringField("Message"),
+    subject: stringField("Subject"),
+
     seen: stringField("Seen"),
     created_at: stringField("Created At"),
     updated_at: stringField("Updated at")
@@ -18,6 +20,7 @@ export const contactSchema = z.object({
     name: stringField("Name"),
     email: emailField("Email"),
     phone: stringField("Phone No."),
+    subject: stringField("Subject"),
     message: stringField("Message"),
 
 })

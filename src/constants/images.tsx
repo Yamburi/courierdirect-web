@@ -12,10 +12,24 @@ import ZAPPER from "../../public/images/zapper.png";
 import LANDING from "../../public/images/landing.png";
 
 import PARCEL from "../../public/images/carbon_delivery-parcel.png";
-
-
+import TrackBanner from "../../public/images/trakimg.jpeg";
 
 import FILE from "../../public/images/file.png";
 
-
-export { LOGO, FILE, WHITELOGO ,delivery,cost,time,AIM ,ABOUTUS,VISA,MASTERCARD,ZAPPER,SNAPSCAN,LANDING,PARCEL};
+export {
+  LOGO,
+  FILE,
+  WHITELOGO,
+  delivery,
+  cost,
+  time,
+  AIM,
+  ABOUTUS,
+  VISA,
+  MASTERCARD,
+  ZAPPER,
+  SNAPSCAN,
+  LANDING,
+  PARCEL,
+  TrackBanner,
+};

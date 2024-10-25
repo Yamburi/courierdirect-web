@@ -1,11 +1,69 @@
 import UIButton from "@/components/ui/uibutton";
 import UIInput from "@/components/ui/uiinput";
+import { errorToast, successToast } from "@/lib/toastify";
+import { resetContactData } from "@/redux/slice/contactSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { contactUser } from "@/redux/thunks/contactThunk";
+import { contactSchema, TContact } from "@/schemas/contact.schema";
+import { parseInputType, validateSchema } from "@/utils/helpers";
 import dynamic from "next/dynamic";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { ChangeEvent, useEffect, useState } from "react";
 const UITextEditor = dynamic(() => import("@/components/ui/uieditor/index"), {
   ssr: false,
 });
 const GetInTouch = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const [state, setState] = useState<{
+    [K in keyof Partial<TContact>]: string;
+  }>({});
+  const [error, setError] = useState<{
+    [K in keyof Partial<TContact>]: string;
+  }>({});
+  const handleInputField = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const name = e.target.name;
+    const type = e.target.type;
+    const required = e.target.required;
+    const value = parseInputType(type, e);
+    const valid = value !== null && value !== undefined && value !== "";
+    setState((prev: any) => ({ ...prev, [name]: valid ? value : undefined }));
+    required &&
+      valid &&
+      setError((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+  };
+  const handleContactUser = () => {
+    try {
+      const response = validateSchema(state, contactSchema);
+      if (response.errors?.hasError) {
+        errorToast("Please Validate indicated fileds");
+        setError(response.errors?.error);
+        return;
+      }
+
+      dispatch(
+        contactUser({
+          data: response?.data,
+        })
+      );
+    } catch (error) {
+      errorToast("Something Went Wrong");
+    }
+  };
+
+  const contactData = useAppSelector((state) => state.contactState);
+  useEffect(() => {
+    if (contactData?.data) {
+      successToast("Thank You For Contacting Us");
+      setState({});
+      dispatch(resetContactData());
+    }
+  }, [contactData?.data, router, dispatch]);
   return (
     <div className=" flex flex-col justify-center items-center ">
       <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] text-webblack">
@@ -18,20 +76,53 @@ const GetInTouch = () => {
               We&apos;re here to help. Chat with our team 24/7
             </div>
             <div className=" flex flex-col gap-4 ">
-              <UIInput label="Full Name" name="name" isRequired />
-              <UIInput label="Email" name="email" isRequired />
+              <UIInput
+                label="Full Name"
+                name="name"
+                value={state.name}
+                onChange={handleInputField}
+                error={error.name}
+                isRequired
+              />
+              <UIInput
+                label="Email"
+                type="email"
+                name="email"
+                isRequired
+                value={state.email}
+                onChange={handleInputField}
+                error={error.email}
+              />
 
-              <UIInput label="Phone No." name="phone" />
-              <UIInput label="Subject" name="subject" isRequired />
+              <UIInput
+                label="Phone No."
+                type="number"
+                name="phone"
+                isRequired
+                value={state.phone}
+                onChange={handleInputField}
+                error={error.phone}
+              />
+              <UIInput
+                label="Subject"
+                name="subject"
+                isRequired
+                value={state.subject}
+                onChange={handleInputField}
+                error={error.subject}
+              />
               <UITextEditor
                 id="message"
                 name="message"
                 label="Message"
                 isRequired
+                defaultValue={state.message}
+                onChange={handleInputField}
+                error={error.message}
                 rows={3}
               />
 
-              <UIButton label="Send Message" type="primary" />
+              <UIButton onClick={handleContactUser} label="Send Message" type="primary" />
             </div>
           </div>
           <div className="border-[#D7C9CE] border-x max-[900px]:hidden"></div>
