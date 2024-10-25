@@ -3,8 +3,13 @@ import UIButton from "@/components/ui/uibutton";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { getUserIdFromLocalStorage } from "@/utils/local";
+import { getChatUnseenCount } from "@/redux/thunks/chatThunk";
+import { useAppDispatch } from "@/redux/store";
 
 const Navbar = () => {
+  const userId = getUserIdFromLocalStorage();
+  const dispatch = useAppDispatch();
   const [showNavModal, setShowNavModal] = useState<boolean>(false);
   const navModalRef = useRef<HTMLDivElement>(null);
 
@@ -28,6 +33,16 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showNavModal]);
+
+  useEffect(() => {
+    const fetchChats = () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      userId && dispatch(getChatUnseenCount({ id: userId }));
+    };
+    fetchChats();
+    const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
+    return () => clearInterval(intervalId);
+  }, [dispatch, userId]);
   return (
     <>
       <div className="flex  bg-primary   text-white justify-center items-center sticky top-0 left-0 right-0 z-50 ">

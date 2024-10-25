@@ -5,7 +5,7 @@ export const chatInsertSchema = z.object({
     user_id: stringField("User Id"),
     name: stringField("Name"),
     email: emailField("Email"),
-    phone: positiveNumberField("Phone"),
+    phone: stringField("Phone"),
     message: stringField("Question"),
 })
 
