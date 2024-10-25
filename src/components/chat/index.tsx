@@ -151,8 +151,7 @@ const Chat = () => {
       };
       const response = validateSchema(dataToValidate, chatReplySchema);
       if (response.errors?.hasError) {
-        errorToast("Please Validate indicated fileds");
-        setError(response.errors?.error);
+        errorToast("Message is required");
         return;
       }
       if (!response.errors?.hasError && userId && chatData?.data[0]?.chat_id) {
@@ -298,7 +297,7 @@ const Chat = () => {
                         message.user_id ? "justify-start" : "justify-end"
                       }`}
                     >
-                      <div>
+                      <div className="flex flex-col gap-2">
                         <div
                           className={`p-3 rounded-lg max-w-[250px] ${
                             message.user_id
@@ -316,7 +315,7 @@ const Chat = () => {
                           </small>
                         </div>
                         {message.images.length > 0 && (
-                          <div className="mt-2 w-[200px]">
+                          <div className="flex flex-col gap-2 w-[200px]">
                             {message.images.map((item, i) => (
                               <Link
                                 href={`${WEBSITE_BASE_URL}/chat/${item?.image}`}
@@ -326,7 +325,7 @@ const Chat = () => {
                                   item?.image?.endsWith(".pdf")
                                     ? "h-10"
                                     : "h-20"
-                                } w-full`}
+                                } w-fit`}
                               >
                                 <Image
                                   unoptimized
@@ -351,15 +350,15 @@ const Chat = () => {
               </div>
 
               <div className="flex justify-center items-center m-4 rounded-xl shadow-card border-[2px] border-secondary relative">
-                <div className="absolute bottom-[115%] left-0 right-0 w-full  overflow-x-auto flex gap-4 bg-white">
+                <div className="absolute bottom-[115%] left-0 right-0 w-full  overflow-x-auto flex flex-wrap gap-4 bg-white p-2">
                   {file &&
                     Object.values(file).map((item, index) => (
                       <div
-                        className="relative w-20 h-20 border border-gray-300 rounded-md bg-white"
+                        className="relative w-16 h-16 border border-gray-300 rounded-md bg-white"
                         key={index}
                       >
                         <i
-                          className="fa-regular fa-times absolute top-0 right-0  bg-red-500 text-white w-6 h-6  flex items-center justify-center cursor-pointer"
+                          className="fa-regular fa-times absolute top-0 right-0  bg-red-500 text-white w-5 h-5 text-xs  flex items-center justify-center cursor-pointer"
                           onClick={() => handleFileDelete(index)}
                         ></i>
                         <Image
@@ -381,7 +380,7 @@ const Chat = () => {
                 </div>
 
                 <i
-                  className="w-[3rem] h-[3rem] flex justify-center items-center rounded-l-xl text-black text-base fa-solid fa-file-plus cursor-pointer"
+                  className="w-[3rem] h-[3rem] flex justify-center items-center rounded-l-xl text-webblack text-base fa-solid fa-file-plus cursor-pointer"
                   onClick={handleFileIconClick}
                 ></i>
                 <input
@@ -389,15 +388,15 @@ const Chat = () => {
                   multiple
                   ref={fileInputRef}
                   className="hidden"
+                  accept=".jpg,.jpeg,.png, .pdf"
                   onChange={handleFileChange}
                 />
                 <input
                   type="text"
                   placeholder="Send Message"
-                  className=" h-[3rem] w-full px-1 outline-none  placeholder-opacity-100"
+                  className=" h-[3rem] w-full px-1 outline-none  placeholder-opacity-100 text-webblack"
                   name="replyText"
                   value={replyText}
-                  accept="images/*, .pdf"
                   onChange={(e) => setReplyText(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleReplyChat()}
                 />
