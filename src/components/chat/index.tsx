@@ -2,6 +2,7 @@ import { errorToast } from "@/lib/toastify";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   getChatDetail,
+  getChatUnseenCount,
   insertChat,
   replyToChat,
 } from "@/redux/thunks/chatThunk";
@@ -84,6 +85,8 @@ const Chat = () => {
     const fetchChats = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       userId && showChat && dispatch(getChatDetail({ id: userId }));
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      userId && showChat && dispatch(getChatUnseenCount({ id: userId }));
     };
     fetchChats();
     const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
@@ -193,9 +196,24 @@ const Chat = () => {
   }, [chatData?.data]);
 
   useEffect(() => {
-    if (chatData?.unseenCount && chatData?.unseenCount?.count > 1) {
-      document.title = `(${chatData.unseenCount?.count}) New Messages`;
+    const originalTitle = document.title;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let interval: any;
+
+    if (chatData?.unseenCount && chatData?.unseenCount?.count > 0) {
+      document.title = `(${chatData?.unseenCount?.count}) New Messages`;
+      interval = setInterval(() => {
+        document.title =
+          document.title === originalTitle
+            ? `(${chatData?.unseenCount?.count}) New Messages`
+            : originalTitle;
+      }, 1000);
     }
+
+    return () => {
+      clearInterval(interval);
+      document.title = originalTitle;
+    };
   }, [chatData.unseenCount]);
 
   return (

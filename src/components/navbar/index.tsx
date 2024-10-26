@@ -43,6 +43,7 @@ const Navbar = () => {
     const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, [dispatch, userId]);
+
   return (
     <>
       <div className="flex  bg-primary   text-white justify-center items-center sticky top-0 left-0 right-0 z-50 ">
