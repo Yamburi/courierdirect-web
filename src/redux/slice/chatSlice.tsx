@@ -69,7 +69,7 @@ const chatSlice = createSlice({
       })
       .addCase(replyToChat.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = [...state.data, action.payload];
+        state.data = [action.payload, ...state.data];
         state.error = null;
       })
       .addCase(replyToChat.rejected, (state) => {

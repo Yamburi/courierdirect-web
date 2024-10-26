@@ -19,6 +19,7 @@ import Image from "next/image";
 import { FILE } from "@/constants/images";
 import { WEBSITE_BASE_URL } from "@/lib/config";
 import Link from "next/link";
+import { resetChatInsertData } from "@/redux/slice/chatSlice";
 
 const Chat = () => {
   const userId = getUserIdFromLocalStorage();
@@ -66,6 +67,7 @@ const Chat = () => {
             callback: () => {
               // eslint-disable-next-line @typescript-eslint/no-unused-expressions
               userId && showChat && dispatch(getChatDetail({ id: userId }));
+              dispatch(resetChatInsertData());
             },
           })
         );
@@ -84,7 +86,7 @@ const Chat = () => {
       userId && showChat && dispatch(getChatDetail({ id: userId }));
     };
     fetchChats();
-    const intervalId = setInterval(fetchChats, 3 * 60 * 1000);
+    const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
     return () => clearInterval(intervalId);
   }, [dispatch, userId, showChat]);
 
@@ -290,11 +292,7 @@ const Chat = () => {
               >
                 {chatData?.data
                   ?.slice()
-                  ?.sort(
-                    (a, b) =>
-                      new Date(a.created_at).getTime() -
-                      new Date(b.created_at).getTime()
-                  )
+                  ?.reverse()
                   ?.map((message) => (
                     <div
                       key={message.id}
