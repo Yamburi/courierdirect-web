@@ -68,6 +68,10 @@ const Chat = () => {
             callback: () => {
               // eslint-disable-next-line @typescript-eslint/no-unused-expressions
               userId && showChat && dispatch(getChatDetail({ id: userId }));
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+              userId &&
+                showChat &&
+                dispatch(getChatUnseenCount({ id: userId }));
               dispatch(resetChatInsertData());
             },
           })
@@ -85,12 +89,15 @@ const Chat = () => {
     const fetchChats = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       userId && showChat && dispatch(getChatDetail({ id: userId }));
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      userId && showChat && dispatch(getChatUnseenCount({ id: userId }));
     };
     fetchChats();
     const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
     return () => clearInterval(intervalId);
+  }, [dispatch, userId, showChat]);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    userId && showChat && dispatch(getChatUnseenCount({ id: userId }));
   }, [dispatch, userId, showChat]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
