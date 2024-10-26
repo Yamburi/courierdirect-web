@@ -15,10 +15,14 @@ import PARCEL from "../../public/images/carbon_delivery-parcel.png";
 import TrackBanner from "../../public/images/trakimg.jpeg";
 
 import FILE from "../../public/images/file.png";
+import CYCLE from "../../public/images/cycle.png";
+import LOC from "../../public/images/loc.png";
 
 export {
   LOGO,
   FILE,
+  CYCLE,
+  LOC,
   WHITELOGO,
   delivery,
   cost,

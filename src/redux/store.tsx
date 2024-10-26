@@ -21,6 +21,7 @@ import storage from "redux-persist/lib/storage";
 
 import contactReducer from "./slice/contactSlice";
 import chatReducer from "./slice/chatSlice";
+import trackReducer from "./slice/trackSlice";
 
 const persistConfig = {
   key: PERSIST_KEY,
@@ -32,9 +33,11 @@ const persistConfig = {
 const rootReducer = combineReducers({
   contactState: contactReducer,
   chatState: chatReducer,
+  trackState: trackReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AppThunkDispatch = ThunkDispatch<RootState, any, AnyAction>;
 export type AppStore = Omit<Store<RootState, AnyAction>, "dispatch"> & {
   dispatch: AppThunkDispatch;

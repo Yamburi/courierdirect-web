@@ -1,7 +1,11 @@
 import ServiceDetailCard from "@/components/servicedetails";
-import { TrackBanner } from "@/constants/images";
+import { CYCLE, LOC, TrackBanner } from "@/constants/images";
+import { errorToast } from "@/lib/toastify";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+// import { getTrackingEvent } from "./helper";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { trackQuote } from "@/redux/thunks/trackThunk";
 
 const Search = () => {
   const trackList = [
@@ -27,11 +31,59 @@ const Search = () => {
       description: "Item processed with item details and user details",
     },
   ];
+  const dispatch = useAppDispatch();
+  const [trackNo, setTrackNo] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+  const handleTrack = async () => {
+    try {
+      if (!trackNo) {
+        errorToast("Tracking No. is required");
+        return;
+      }
+      const dataToSent = {
+        trackNo: trackNo,
+      };
+      dispatch(trackQuote({ data: dataToSent }));
+      // const data = await getTrackingEvent(trackNo);
+      // setTrackData(data);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      console.log(error, "err");
+      errorToast("Something went wrong ");
+    }
+  };
+
+  const trackData = useAppSelector((state) => state.trackState);
+  console.log(trackData, "...");
+
   return (
     <div className=" flex flex-col justify-center items-center ">
       <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] text-webblack">
-        <div className="flex   justify-center items-center ">
-          <div className="border h-[2.5rem] shadow-lg rounded-xl bg-slate-50 flex w-[50%]">
+        <div className="flex   justify-center items-center relative min-h-[200px] ">
+          <div className="absolute top-[30%] left-[18%] h-24 w-24 z-10">
+            <Image
+              src={LOC}
+              className="w-full h-full object-contain"
+              alt="bgimage"
+              unoptimized
+              height={1000}
+              width={1000}
+              quality={100}
+            />
+          </div>
+          <div className="absolute bottom-[10%] right-[13%] h-36 w-36 z-10">
+            <Image
+              src={CYCLE}
+              className="w-full h-full object-contain"
+              alt="bgimage"
+              unoptimized
+              height={1000}
+              width={1000}
+              quality={100}
+            />
+          </div>
+          <div className="border h-[3.5rem] shadow-lg rounded-xl bg-slate-50 flex w-[50%] ">
             <div className=" w-[10%]  flex justify-center items-center ">
               <i className="text-black text-base fa-solid fa-magnifying-glass"></i>
             </div>
@@ -39,8 +91,14 @@ const Search = () => {
               type="text"
               placeholder="Enter Tracking Number..."
               className="  w-[70%] bg-slate-50 max-small:w-full px-1 outline-none placeholder-opacity-100"
+              value={trackNo}
+              onChange={(e) => setTrackNo(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleTrack()}
             />
-            <div className="bg-primary shadow-lg rounded-r-xl text-white flex justify-center items-center w-[20%]   ">
+            <div
+              className="bg-primary shadow-lg rounded-r-xl text-white flex justify-center items-center w-[20%]"
+              onClick={handleTrack}
+            >
               Track
             </div>
           </div>
@@ -80,14 +138,13 @@ const Search = () => {
                   <i className="fa-solid fa-chevron-down"></i>
                   <div className="">Shipment summary</div>
                 </div>
-                
-                  <div className="flex flex-col gap-2">
-                    {Array.isArray(trackList) &&
-                      trackList?.map((value, i) => (
-                        <ServiceDetailCard data={value} key={i} />
-                      ))}
-                  </div>
-              
+
+                <div className="flex flex-col gap-2">
+                  {Array.isArray(trackList) &&
+                    trackList?.map((value, i) => (
+                      <ServiceDetailCard data={value} key={i} />
+                    ))}
+                </div>
 
                 <div className="mt-10">
                   <div className="font-medium">Need help with delivery?</div>
@@ -102,7 +159,7 @@ const Search = () => {
                           Call us
                         </h2>
                         <p className="text-base  leading-6 font-normal ">
-                        (012) 657 1985
+                          (012) 657 1985
                         </p>
                       </div>
                     </div>

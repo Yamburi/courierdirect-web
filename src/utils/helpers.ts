@@ -5,6 +5,7 @@ import { UISelectOptionEvent } from "@/components/ui/uiselect";
 import axios from "axios";
 
 export const handleApiError = (error: any) => {
+  console.log(error, "ppp")
   if (axios.isCancel(error)) return;
 
   if (error.response && error.response.data && error.response.data.errors) {
