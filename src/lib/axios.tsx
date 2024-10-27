@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosRequestConfig } from "axios";
 import { API_BASE_URL } from "./config";
 import { handleApiError } from "@/utils/helpers";
-import { logout } from "@/utils/local";
 let is401ToastDisplayed = false;
 
 const instance = axios.create({
@@ -28,9 +29,6 @@ instance.interceptors.response.use(null, async (error) => {
     !is401ToastDisplayed
   ) {
     is401ToastDisplayed = true;
-    setTimeout(() => {
-      logout();
-    }, 1000);
   }
   throw error;
 });

@@ -2,7 +2,6 @@ import { CYCLE, LOC, NODATA, TrackBanner } from "@/constants/images";
 import { errorToast } from "@/lib/toastify";
 import Image from "next/image";
 import React from "react";
-// import { getTrackingEvent } from "./helper";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { trackQuote } from "@/redux/thunks/trackThunk";
 import { useRouter } from "next/router";

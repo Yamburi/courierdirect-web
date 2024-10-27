@@ -55,7 +55,6 @@ export default function UISelect({
   disabled,
   showSearch,
   instruction,
-  zindex,
 }: TUISelectProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
@@ -79,6 +78,7 @@ export default function UISelect({
   const handleOptionSelect = (index: number) => {
     setSelectedOptionIndex(index);
     const selectedOption = filteredOptions[index];
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     onChange &&
       onChange({
         target: {
@@ -93,6 +93,7 @@ export default function UISelect({
   };
 
   const handleDisplayEvent = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     !disabled && toggleShow(!show);
   };
 

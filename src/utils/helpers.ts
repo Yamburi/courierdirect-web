@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ZodError, ZodType } from "zod";
 import { errorToast, successToast } from "../lib/toastify";

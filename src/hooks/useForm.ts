@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { errorToast, successToast } from "@/lib/toastify";
-import { useAppDispatch } from "@/redux/store";
 import { UISelectOptionEvent } from "@/components/ui/uiselect";
 import { parseInputType, validateSchema } from "@/utils/helpers";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";

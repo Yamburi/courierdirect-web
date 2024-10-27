@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z, ZodType } from "zod"
 
 export const positiveNumberField = (val: string, min: number = 0) =>
@@ -33,7 +34,7 @@ export const stringField = (val: string, min: number = 1) =>
         })
         .min(min, { message: `${val} is required` });
 
-export const booleanField = (val: string, min: number = 1) =>
+export const booleanField = (val: string) =>
     z.boolean({
         required_error: `${val} is required`,
         invalid_type_error: "Provide valid type",

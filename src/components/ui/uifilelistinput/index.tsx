@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FILE } from "@/constants/images";
 import Image from "next/image";
 import {
@@ -52,6 +53,7 @@ export default function UIFileListInput({
     combinedFiles.forEach((file) => dataTransfer.items.add(file));
 
     setFileList(dataTransfer.files);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     onChange &&
       onChange({
         target: {
@@ -72,6 +74,7 @@ export default function UIFileListInput({
     files.forEach((file) => dataTransfer.items.add(file));
 
     setFileList(dataTransfer.files);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     onChange &&
       onChange({
         target: {

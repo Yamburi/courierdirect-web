@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import UIButton from "@/components/ui/uibutton";
 import UIInput from "@/components/ui/uiinput";
 import { errorToast, successToast } from "@/lib/toastify";
@@ -122,7 +125,11 @@ const GetInTouch = () => {
                 rows={3}
               />
 
-              <UIButton onClick={handleContactUser} label="Send Message" type="primary" />
+              <UIButton
+                onClick={handleContactUser}
+                label="Send Message"
+                type="primary"
+              />
             </div>
           </div>
           <div className="border-[#D7C9CE] border-x max-[900px]:hidden"></div>

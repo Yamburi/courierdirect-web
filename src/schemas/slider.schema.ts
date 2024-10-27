@@ -1,6 +1,5 @@
 import { z } from "zod"
 import { stringField } from "./global.schema"
-import { link } from "fs"
 
 export const sliderSchema = z.object({
     id: stringField("Id"),
