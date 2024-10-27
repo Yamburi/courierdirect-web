@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -9,10 +9,26 @@ import Link from "next/link";
 
 import { WEBSITE_BASE_URL } from "@/lib/config";
 import { TSlider } from "@/schemas/slider.schema";
+import { useRouter } from "next/router";
+import { errorToast } from "@/lib/toastify";
 interface SliderProps {
   sliderList: TSlider[];
 }
 const Slider: React.FC<SliderProps> = ({ sliderList }) => {
+  const [trackNo, setTrackNo] = useState<string>("");
+  const router = useRouter();
+  const handleTrack = () => {
+    try {
+      if (!trackNo) {
+        errorToast("Tracking No. is required");
+        return;
+      }
+      router.push(`/tracking?trackNo=${trackNo}`);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      errorToast("Something went wrong");
+    }
+  };
   return (
     <div className="w-full relative ">
       <Swiper
@@ -68,8 +84,14 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
               type="text"
               placeholder="Enter Tracking Number..."
               className=" h-[3rem] w-[18rem] max-small:w-full px-1 outline-none  placeholder-opacity-100"
+              value={trackNo}
+              onChange={(e) => setTrackNo(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleTrack()}
             />
-            <div className="bg-secondary flex justify-center items-center w-[3rem] h-[3rem]  rounded-r-xl">
+            <div
+              className="bg-secondary flex justify-center items-center w-[3rem] h-[3rem]  rounded-r-xl"
+              onClick={handleTrack}
+            >
               <i className="text-white text-base fa-solid fa-chevron-right"></i>
             </div>
           </div>

@@ -17,6 +17,7 @@ import TrackBanner from "../../public/images/trakimg.jpeg";
 import FILE from "../../public/images/file.png";
 import CYCLE from "../../public/images/cycle.png";
 import LOC from "../../public/images/loc.png";
+import NODATA from "../../public/images/nodata.gif";
 
 export {
   LOGO,
@@ -36,4 +37,5 @@ export {
   LANDING,
   PARCEL,
   TrackBanner,
+  NODATA,
 };

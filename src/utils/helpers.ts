@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ZodError, ZodType } from "zod";
 import { errorToast, successToast } from "../lib/toastify";
 import { ChangeEvent, HTMLInputTypeAttribute } from "react";
@@ -5,7 +6,6 @@ import { UISelectOptionEvent } from "@/components/ui/uiselect";
 import axios from "axios";
 
 export const handleApiError = (error: any) => {
-  console.log(error, "ppp")
   if (axios.isCancel(error)) return;
 
   if (error.response && error.response.data && error.response.data.errors) {
