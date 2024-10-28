@@ -388,7 +388,11 @@ const Chat = () => {
                           </small>
                         </div>
                         {message.images.length > 0 && (
-                          <div className="flex flex-col gap-2 w-[200px]">
+                          <div
+                            className={`flex flex-col gap-2 w-[200px] ${
+                              message.user_id ? "" : "items-end"
+                            }`}
+                          >
                             {message.images.map((item, i) => (
                               <Link
                                 href={`${WEBSITE_BASE_URL}/chat/${item?.image}`}

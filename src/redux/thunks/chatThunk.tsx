@@ -35,9 +35,12 @@ export const getChatNewMessage = createAsyncThunk<
   { id: string }
 >("getChatMessage", async ({ id }) => {
   try {
-    const response = await doGet(`/web/chat/new-message/${id}`, {
-      timeout: 15 * 60 * 1000,
-    });
+    const response = await doGet(
+      `/web/chat/new-message/${id}`
+      //    {
+      //   timeout: 15 * 60 * 1000,
+      // }
+    );
     return response;
   } catch (error) {
     throw error;
