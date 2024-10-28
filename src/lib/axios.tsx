@@ -3,7 +3,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { API_BASE_URL } from "./config";
 import { handleApiError } from "@/utils/helpers";
-let is401ToastDisplayed = false;
+// let is401ToastDisplayed = false;
 
 const instance = axios.create({
   baseURL: API_BASE_URL,
@@ -23,15 +23,15 @@ instance.interceptors.request.use(
   }
 );
 
-instance.interceptors.response.use(null, async (error) => {
-  if (
-    (error.response.status === 401 || error.response.status === 403) &&
-    !is401ToastDisplayed
-  ) {
-    is401ToastDisplayed = true;
-  }
-  throw error;
-});
+// instance.interceptors.response.use(null, async (error) => {
+//   if (
+//     (error.response.status === 401 || error.response.status === 403) &&
+//     !is401ToastDisplayed
+//   ) {
+//     is401ToastDisplayed = true;
+//   }
+//   throw error;
+// });
 
 export const doGet = async (
   url: string,

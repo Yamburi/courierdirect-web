@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getChatDetail,
+  getChatNewMessage,
   getChatUnseenCount,
   insertChat,
   replyToChat,
@@ -29,6 +30,9 @@ const chatSlice = createSlice({
   reducers: {
     resetChatInsertData: (state) => {
       state.insert = null;
+    },
+    updateChatMessage: (state, action) => {
+      state.data = [...action.payload, ...state.data];
     },
   },
   extraReducers: (builder) => {
@@ -89,9 +93,22 @@ const chatSlice = createSlice({
         state.error = "Failed to chat user";
         state.loading = false;
         state.unseenCount = null;
+      })
+      .addCase(getChatNewMessage.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getChatNewMessage.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+        // state.detail = [...action.payload, ...state.detail];
+      })
+      .addCase(getChatNewMessage.rejected, (state) => {
+        state.error = "Failed to chat user";
+        state.loading = false;
       });
   },
 });
 
-export const { resetChatInsertData } = chatSlice.actions;
+export const { resetChatInsertData, updateChatMessage } = chatSlice.actions;
 export default chatSlice.reducer;

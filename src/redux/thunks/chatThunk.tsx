@@ -30,6 +30,19 @@ export const getChatDetail = createAsyncThunk<TChatDetail[], { id: string }>(
     }
   }
 );
+export const getChatNewMessage = createAsyncThunk<
+  TChatDetail[],
+  { id: string }
+>("getChatMessage", async ({ id }) => {
+  try {
+    const response = await doGet(`/web/chat/new-message/${id}`, {
+      timeout: 15 * 60 * 1000,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+});
 
 export const getChatUnseenCount = createAsyncThunk<
   TChatUnseenCount,

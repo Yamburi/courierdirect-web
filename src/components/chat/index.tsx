@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { errorToast } from "@/lib/toastify";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   getChatDetail,
+  getChatNewMessage,
   getChatUnseenCount,
   insertChat,
   replyToChat,
@@ -9,6 +11,7 @@ import {
 import {
   chatInsertSchema,
   chatReplySchema,
+  TChatDetail,
   TChatInsertSchema,
 } from "@/schemas/chat.schema";
 import { parseFormData, parseInputType, validateSchema } from "@/utils/helpers";
@@ -20,7 +23,10 @@ import Image from "next/image";
 import { FILE } from "@/constants/images";
 import { WEBSITE_BASE_URL } from "@/lib/config";
 import Link from "next/link";
-import { resetChatInsertData } from "@/redux/slice/chatSlice";
+import {
+  resetChatInsertData,
+  updateChatMessage,
+} from "@/redux/slice/chatSlice";
 
 const Chat = () => {
   const userId = getUserIdFromLocalStorage();
@@ -84,15 +90,54 @@ const Chat = () => {
   };
 
   const chatData = useAppSelector((state) => state.chatState);
+  console.log(chatData?.data?.length, "ll");
 
   useEffect(() => {
-    const fetchChats = () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      userId && showChat && dispatch(getChatDetail({ id: userId }));
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    userId && showChat && dispatch(getChatDetail({ id: userId }));
+  }, [dispatch, userId, showChat]);
+
+  useEffect(() => {
+    let isPolling = true;
+    let isRequestInProgress = false;
+    let retryAttempts = 0;
+    const basePollInterval = 5000;
+
+    const pollNewMessages = async () => {
+      if (!isPolling || isRequestInProgress) return;
+
+      isRequestInProgress = true;
+
+      try {
+        if (userId && showChat) {
+          const response = await dispatch(getChatNewMessage({ id: userId }));
+          console.log(response, "Polling response");
+          if (
+            response.payload &&
+            (response.payload as TChatDetail[]).length > 0
+          ) {
+            dispatch(updateChatMessage(response.payload));
+            retryAttempts = 0;
+          }
+        }
+      } catch (error) {
+        retryAttempts += 1;
+      } finally {
+        isRequestInProgress = false;
+
+        if (isPolling) {
+          const nextPollInterval =
+            basePollInterval * Math.min(2 ** retryAttempts, 32);
+          setTimeout(pollNewMessages, nextPollInterval);
+        }
+      }
     };
-    fetchChats();
-    const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
-    return () => clearInterval(intervalId);
+
+    pollNewMessages();
+
+    return () => {
+      isPolling = false;
+    };
   }, [dispatch, userId, showChat]);
 
   useEffect(() => {
