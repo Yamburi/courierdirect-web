@@ -45,9 +45,21 @@ const Navbar = () => {
       <div className="flex  bg-primary   text-white justify-center items-center sticky top-0 left-0 right-0 z-50 ">
         <header className=" w-content large:px-0 medium:px-[2.5rem] px-[1.5rem]  flex py-3 justify-between items-center max-large:w-full max-small:hidden">
           <div className=" flex gap-5">
-            <i className="fa-brands fa-facebook"></i>
-            <i className="fa-brands fa-google"></i>
-            <i className="fa-brands fa-instagram"></i>
+            <Link
+              href="https://www.facebook.com/courierdirect/"
+              target="_blank"
+            >
+              <i className="fa-brands fa-facebook"></i>
+            </Link>
+            <Link href="https://x.com/courierdirect" target="_blank">
+              <i className="fa-brands fa-twitter"></i>
+            </Link>
+            <Link
+              href="https://www.instagram.com/courier_direct/"
+              target="_blank"
+            >
+              <i className="fa-brands fa-instagram"></i>
+            </Link>
           </div>
           <div className="flex justify-center items-center gap-7">
             <div className="flex gap-2 justify-center items-center">

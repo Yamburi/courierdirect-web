@@ -76,6 +76,7 @@ const Chat = () => {
           insertChat({
             data: response?.data,
             callback: () => {
+              setState({});
               // eslint-disable-next-line @typescript-eslint/no-unused-expressions
               userId && showChat && dispatch(getChatDetail({ id: userId }));
               // eslint-disable-next-line @typescript-eslint/no-unused-expressions
