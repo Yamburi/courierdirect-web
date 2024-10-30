@@ -8,7 +8,6 @@ import { UISelectOptionEvent } from "@/components/ui/uiselect";
 import axios from "axios";
 
 export const handleApiError = (error: any) => {
-  console.log(error, "oooo")
   if (axios.isCancel(error)) return;
   if (error.code === 'ECONNABORTED' && error.message.includes('timeout')) {
     return;

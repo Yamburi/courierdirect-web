@@ -59,6 +59,18 @@ export const getChatUnseenCount = createAsyncThunk<
   }
 });
 
+export const getChatNewUnseenCount = createAsyncThunk<
+  TChatUnseenCount,
+  { id: string }
+>("getChatNewUnseenCount", async ({ id }) => {
+  try {
+    const response = await doGet(`/web/chat/new-unseen/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+});
+
 export const replyToChat = createAsyncThunk<
   TChatDetail,
   {

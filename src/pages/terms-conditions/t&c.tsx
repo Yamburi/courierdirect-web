@@ -8,7 +8,7 @@ const TOC: React.FC<PrivacyProps> = ({ tocList }) => {
     <div className=" flex flex-col justify-center items-center ">
       <div className="large:w-content w-full medium:px-[2.5rem] large:px-0 px-[1.5rem] text-webblack">
         <div
-          className=""
+          className="text-base leading-6"
           dangerouslySetInnerHTML={{
             __html: tocList[0]?.toc ?? "",
           }}

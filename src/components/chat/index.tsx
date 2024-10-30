@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { errorToast } from "@/lib/toastify";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   getChatDetail,
   getChatNewMessage,
+  getChatNewUnseenCount,
   getChatUnseenCount,
   insertChat,
   replyToChat,
@@ -13,6 +15,7 @@ import {
   chatReplySchema,
   TChatDetail,
   TChatInsertSchema,
+  TChatUnseenCount,
 } from "@/schemas/chat.schema";
 import { parseFormData, parseInputType, validateSchema } from "@/utils/helpers";
 import { getUserIdFromLocalStorage } from "@/utils/local";
@@ -26,6 +29,7 @@ import Link from "next/link";
 import {
   resetChatInsertData,
   updateChatMessage,
+  updateChatUnseenCount,
 } from "@/redux/slice/chatSlice";
 
 const Chat = () => {
@@ -75,9 +79,9 @@ const Chat = () => {
               // eslint-disable-next-line @typescript-eslint/no-unused-expressions
               userId && showChat && dispatch(getChatDetail({ id: userId }));
               // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-              userId &&
-                showChat &&
-                dispatch(getChatUnseenCount({ id: userId }));
+              // userId &&
+              //   showChat &&
+              //   dispatch(getChatUnseenCount({ id: userId }));
               dispatch(resetChatInsertData());
             },
           })
@@ -90,11 +94,10 @@ const Chat = () => {
   };
 
   const chatData = useAppSelector((state) => state.chatState);
-  console.log(chatData?.data?.length, "ll");
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     userId && showChat && dispatch(getChatDetail({ id: userId }));
+    userId && showChat && dispatch(updateChatUnseenCount({ count: 0 }));
   }, [dispatch, userId, showChat]);
 
   useEffect(() => {
@@ -109,9 +112,8 @@ const Chat = () => {
       isRequestInProgress = true;
 
       try {
-        if (userId && showChat) {
+        if (userId && showChat && chatData?.data?.length > 0) {
           const response = await dispatch(getChatNewMessage({ id: userId }));
-          console.log(response, "Polling response");
           if (
             response.payload &&
             (response.payload as TChatDetail[]).length > 0
@@ -138,12 +140,53 @@ const Chat = () => {
     return () => {
       isPolling = false;
     };
-  }, [dispatch, userId, showChat]);
+  }, [dispatch, userId, showChat, chatData?.data]);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    userId && showChat && dispatch(getChatUnseenCount({ id: userId }));
-  }, [dispatch, userId, showChat]);
+    userId && dispatch(getChatUnseenCount({ id: userId }));
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    let isPolling = true;
+    let isRequestInProgress = false;
+    let retryAttempts = 0;
+    const basePollInterval = 5000;
+
+    const pollNewUnseenCount = async () => {
+      if (!isPolling || isRequestInProgress) return;
+
+      isRequestInProgress = true;
+
+      try {
+        if (userId) {
+          const response = await dispatch(
+            getChatNewUnseenCount({ id: userId })
+          );
+          if (response.payload && (response.payload as TChatUnseenCount)) {
+            dispatch(updateChatUnseenCount(response.payload));
+            retryAttempts = 0;
+          }
+        }
+      } catch (error) {
+        retryAttempts += 1;
+      } finally {
+        isRequestInProgress = false;
+
+        if (isPolling) {
+          const nextPollInterval =
+            basePollInterval * Math.min(2 ** retryAttempts, 32);
+          setTimeout(pollNewUnseenCount, nextPollInterval);
+        }
+      }
+    };
+
+    pollNewUnseenCount();
+
+    return () => {
+      isPolling = false;
+    };
+  }, [dispatch, userId]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const handleFileIconClick = () => {

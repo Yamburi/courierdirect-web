@@ -1,15 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { LOGO, WHITELOGO } from "@/constants/images";
 import UIButton from "@/components/ui/uibutton";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { getUserIdFromLocalStorage } from "@/utils/local";
-import { getChatUnseenCount } from "@/redux/thunks/chatThunk";
-import { useAppDispatch } from "@/redux/store";
 
 const Navbar = () => {
-  const userId = getUserIdFromLocalStorage();
-  const dispatch = useAppDispatch();
   const [showNavModal, setShowNavModal] = useState<boolean>(false);
   const navModalRef = useRef<HTMLDivElement>(null);
 
@@ -34,15 +30,15 @@ const Navbar = () => {
     };
   }, [showNavModal]);
 
-  useEffect(() => {
-    const fetchChats = () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      userId && dispatch(getChatUnseenCount({ id: userId }));
-    };
-    fetchChats();
-    const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
-    return () => clearInterval(intervalId);
-  }, [dispatch, userId]);
+  // useEffect(() => {
+  //   const fetchChats = () => {
+  //     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  //     userId && dispatch(getChatUnseenCount({ id: userId }));
+  //   };
+  //   fetchChats();
+  //   const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
+  //   return () => clearInterval(intervalId);
+  // }, [dispatch, userId]);
 
   return (
     <>
