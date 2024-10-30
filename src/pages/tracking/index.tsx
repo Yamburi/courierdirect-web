@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import React from "react";
@@ -5,7 +6,7 @@ import React from "react";
 import TrackLanding from "./landing";
 import Search from "./search";
 
-const FaqIndex = () => {
+const Tracking = () => {
   return (
     <div>
       <Navbar />
@@ -19,4 +20,14 @@ const FaqIndex = () => {
   );
 };
 
-export default FaqIndex;
+export default Tracking;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getStaticProps(context: any) {
+  return {
+    props: {
+      title: `Courier Direct | Tracking`,
+      url: `https://www.courierdirect.com/tracking`,
+    },
+  };
+}

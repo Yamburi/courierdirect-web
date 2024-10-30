@@ -32,6 +32,8 @@ export async function getServerSideProps() {
   return {
     props: {
       content: contents?.data?.data,
+      title: `Courier Direct | Privacy Policy`,
+      url: `https://www.courierdirect.com/privacy-policy`,
     },
   };
 }

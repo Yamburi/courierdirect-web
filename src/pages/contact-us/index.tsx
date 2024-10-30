@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import React from "react";
@@ -22,3 +23,12 @@ const ContactIndex = () => {
 };
 
 export default ContactIndex;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getStaticProps(context: any) {
+  return {
+    props: {
+      title: `Courier Direct | Contact Us`,
+      url: `https://www.courierdirect.com/contact-us`,
+    },
+  };
+}

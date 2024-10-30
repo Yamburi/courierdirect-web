@@ -42,6 +42,8 @@ export async function getServerSideProps() {
     props: {
       service: services?.data?.data,
       servicedetail: servicedetails?.data?.data,
+      title: `Courier Direct | Services`,
+      url: `https://www.courierdirect.com/service`,
     },
   };
 }
