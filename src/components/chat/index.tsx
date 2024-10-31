@@ -31,6 +31,7 @@ import {
   updateChatMessage,
   updateChatUnseenCount,
 } from "@/redux/slice/chatSlice";
+import UILoader from "../ui/uiloader";
 
 const Chat = () => {
   const userId = getUserIdFromLocalStorage();
@@ -147,6 +148,11 @@ const Chat = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     userId && dispatch(getChatUnseenCount({ id: userId }));
   }, [dispatch, userId]);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    userId && showChat && dispatch(updateChatUnseenCount({ count: 0 }));
+  }, [dispatch, userId, showChat]);
 
   useEffect(() => {
     let isPolling = true;
@@ -313,225 +319,230 @@ const Chat = () => {
   }, [chatData.unseenCount]);
 
   return (
-    <div className="fixed right-[2%] bottom-[2%] flex gap-4 items-center z-50">
-      {showHelp && (
-        <div className="relative bg-[#E8ECF2] rounded-[2rem] px-9 py-3 h-fit flex items-center justify-center shadow-card text-sm">
+    <>
+      {chatData?.loading && <UILoader />}
+      <div className="fixed right-[2%] bottom-[2%] flex gap-4 items-center z-50">
+        {showHelp && (
+          <div className="relative bg-[#E8ECF2] rounded-[2rem] px-9 py-3 h-fit flex items-center justify-center shadow-card text-sm">
+            <i
+              className="fa-regular fa-times absolute top-[-10%] left-[-2%] bg-secondary text-white flex justify-center items-center h-[20px] w-[20px] rounded-full text-[10px] cursor-pointer"
+              onClick={() => setShowHelp(false)}
+            ></i>
+            Need any help
+          </div>
+        )}
+        <div className="relative">
           <i
-            className="fa-regular fa-times absolute top-[-10%] left-[-2%] bg-secondary text-white flex justify-center items-center h-[20px] w-[20px] rounded-full text-[10px] cursor-pointer"
-            onClick={() => setShowHelp(false)}
+            className={`fa-solid fa-${
+              showChat ? "times" : "comment"
+            } h-[60px] w-[60px] rounded-full bg-secondary text-white text-2xl flex justify-center items-center shadow-card cursor-pointer`}
+            onClick={() => {
+              setShowChat((prev) => !prev);
+              setShowHelp(false);
+            }}
           ></i>
-          Need any help
-        </div>
-      )}
-      <div className="relative">
-        <i
-          className={`fa-solid fa-${
-            showChat ? "times" : "comment"
-          } h-[60px] w-[60px] rounded-full bg-secondary text-white text-2xl flex justify-center items-center shadow-card cursor-pointer`}
-          onClick={() => {
-            setShowChat((prev) => !prev);
-            setShowHelp(false);
-          }}
-        ></i>
 
-        {showChat &&
-          userId &&
-          (chatData?.data?.length === 0 ? (
-            <div className="absolute w-[300px] bottom-[105%] right-0 rounded-b-xl bg-white max-h-[400px] overflow-auto shadow-card">
-              <div className="bg-primary text-white text-base leading-6 p-4">
-                Welcome to Courier Direct Please fill out the form below to
-                start chatting with us.
+          {showChat &&
+            userId &&
+            (chatData?.data?.length === 0 ? (
+              <div className="absolute w-[300px] bottom-[105%] right-0 rounded-b-xl bg-white max-h-[400px] overflow-auto shadow-card">
+                <div className="bg-primary text-white text-base leading-6 p-4">
+                  Welcome to Courier Direct Please fill out the form below to
+                  start chatting with us.
+                </div>
+                <div className="flex flex-col gap-4 p-4">
+                  <UIInput
+                    id="name"
+                    label="Name"
+                    isRequired
+                    placeholder="Name here ..."
+                    name="name"
+                    onChange={handleInputField}
+                    value={state.name}
+                    error={error.name}
+                  />
+                  <UIInput
+                    id="email"
+                    label="Email"
+                    isRequired
+                    placeholder="Email here ..."
+                    name="email"
+                    onChange={handleInputField}
+                    value={state.email}
+                    error={error.email}
+                  />
+                  <UIInput
+                    id="phone"
+                    label="Phone No."
+                    type="number"
+                    isRequired
+                    placeholder="Phone no. here ..."
+                    name="phone"
+                    onChange={handleInputField}
+                    value={state.phone}
+                    error={error.phone}
+                  />
+                  <UIInput
+                    id="message"
+                    label="Question"
+                    isRequired
+                    placeholder="Question here ..."
+                    name="message"
+                    onChange={handleInputField}
+                    value={state.message}
+                    error={error.message}
+                  />
+                  <UIButton
+                    label={<span>Start Conversation</span>}
+                    type="primary"
+                    onClick={handleCreateChat}
+                  />
+                </div>
               </div>
-              <div className="flex flex-col gap-4 p-4">
-                <UIInput
-                  id="name"
-                  label="Name"
-                  isRequired
-                  placeholder="Name here ..."
-                  name="name"
-                  onChange={handleInputField}
-                  value={state.name}
-                  error={error.name}
-                />
-                <UIInput
-                  id="email"
-                  label="Email"
-                  isRequired
-                  placeholder="Email here ..."
-                  name="email"
-                  onChange={handleInputField}
-                  value={state.email}
-                  error={error.email}
-                />
-                <UIInput
-                  id="phone"
-                  label="Phone No."
-                  type="number"
-                  isRequired
-                  placeholder="Phone no. here ..."
-                  name="phone"
-                  onChange={handleInputField}
-                  value={state.phone}
-                  error={error.phone}
-                />
-                <UIInput
-                  id="message"
-                  label="Question"
-                  isRequired
-                  placeholder="Question here ..."
-                  name="message"
-                  onChange={handleInputField}
-                  value={state.message}
-                  error={error.message}
-                />
-                <UIButton
-                  label={<span>Start Conversation</span>}
-                  type="primary"
-                  onClick={handleCreateChat}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="absolute w-[300px] bottom-[105%] right-0 rounded-xl bg-white shadow-card">
-              <div className="bg-secondary text-white text-base leading-6 p-4 flex justify-between items-center rounded-t-xl ">
-                <h2>Courier Direct</h2>
-                <i
-                  className="fa-regular fa-times cursor-pointer"
-                  onClick={() => setShowChat(false)}
-                ></i>
-              </div>
-              <div
-                className="flex flex-col gap-4 p-4 h-[300px] max-h-[300px] overflow-auto"
-                ref={chatRef}
-              >
-                {chatData?.data
-                  ?.slice()
-                  ?.reverse()
-                  ?.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex ${
-                        message.user_id ? "justify-start" : "justify-end"
-                      }`}
-                    >
-                      <div className="flex flex-col gap-2">
-                        <div
-                          className={`p-3 rounded-lg max-w-[250px] ${
-                            message.user_id
-                              ? "bg-primary text-white self-start"
-                              : "bg-gray-100 text-webblack self-end"
-                          }`}
-                        >
-                          <p>{message.message}</p>
-                          <small
-                            className={`block mt-1 text-xs  ${
-                              message.user_id ? "text-white" : "text-webblack"
-                            }`}
-                          >
-                            {new Date(message.created_at).toLocaleTimeString()}
-                          </small>
-                        </div>
-                        {message.images.length > 0 && (
-                          <div
-                            className={`flex flex-col gap-2 w-[200px] ${
-                              message.user_id ? "" : "items-end"
-                            }`}
-                          >
-                            {message.images.map((item, i) => (
-                              <Link
-                                href={`${WEBSITE_BASE_URL}/chat/${item?.image}`}
-                                target="_blank"
-                                key={i}
-                                className={`${
-                                  item?.image?.endsWith(".pdf")
-                                    ? "h-10"
-                                    : "h-20"
-                                } w-fit`}
-                              >
-                                <Image
-                                  unoptimized
-                                  src={
-                                    item?.image.endsWith(".pdf")
-                                      ? FILE
-                                      : `${WEBSITE_BASE_URL}/chat/${item?.image}`
-                                  }
-                                  alt={item?.image}
-                                  width={1000}
-                                  height={1000}
-                                  quality={100}
-                                  className="object-contain h-full w-full rounded-lg"
-                                />
-                              </Link>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-              </div>
-
-              <div className="flex justify-center items-center m-4 rounded-xl shadow-card border-[2px] border-secondary relative">
-                <div className="absolute bottom-[115%] left-0 right-0 w-full  overflow-x-auto flex flex-wrap gap-4 bg-white p-2">
-                  {file &&
-                    Object.values(file).map((item, index) => (
+            ) : (
+              <div className="absolute w-[300px] bottom-[105%] right-0 rounded-xl bg-white shadow-card">
+                <div className="bg-secondary text-white text-base leading-6 p-4 flex justify-between items-center rounded-t-xl ">
+                  <h2>Courier Direct</h2>
+                  <i
+                    className="fa-regular fa-times cursor-pointer"
+                    onClick={() => setShowChat(false)}
+                  ></i>
+                </div>
+                <div
+                  className="flex flex-col gap-4 p-4 h-[300px] max-h-[300px] overflow-auto"
+                  ref={chatRef}
+                >
+                  {chatData?.data
+                    ?.slice()
+                    ?.reverse()
+                    ?.map((message) => (
                       <div
-                        className="relative w-16 h-16 border border-gray-300 rounded-md bg-white"
-                        key={index}
+                        key={message.id}
+                        className={`flex ${
+                          message.user_id ? "justify-start" : "justify-end"
+                        }`}
                       >
-                        <i
-                          className="fa-regular fa-times absolute top-0 right-0  bg-red-500 text-white w-5 h-5 text-xs  flex items-center justify-center cursor-pointer"
-                          onClick={() => handleFileDelete(index)}
-                        ></i>
-                        <Image
-                          unoptimized
-                          key={index}
-                          src={
-                            item.type.indexOf("image/") > -1
-                              ? URL.createObjectURL(item)
-                              : FILE
-                          }
-                          alt={item.name}
-                          width={1000}
-                          height={1000}
-                          quality={100}
-                          className="w-full h-full object-contain"
-                        />
+                        <div className="flex flex-col gap-2">
+                          <div
+                            className={`p-3 rounded-lg max-w-[250px] ${
+                              message.user_id
+                                ? "bg-primary text-white self-start"
+                                : "bg-gray-100 text-webblack self-end"
+                            }`}
+                          >
+                            <p>{message.message}</p>
+                            <small
+                              className={`block mt-1 text-xs  ${
+                                message.user_id ? "text-white" : "text-webblack"
+                              }`}
+                            >
+                              {new Date(
+                                message.created_at
+                              ).toLocaleTimeString()}
+                            </small>
+                          </div>
+                          {message.images.length > 0 && (
+                            <div
+                              className={`flex flex-col gap-2 w-[200px] ${
+                                message.user_id ? "" : "items-end"
+                              }`}
+                            >
+                              {message.images.map((item, i) => (
+                                <Link
+                                  href={`${WEBSITE_BASE_URL}/chat/${item?.image}`}
+                                  target="_blank"
+                                  key={i}
+                                  className={`${
+                                    item?.image?.endsWith(".pdf")
+                                      ? "h-10"
+                                      : "h-20"
+                                  } w-fit`}
+                                >
+                                  <Image
+                                    unoptimized
+                                    src={
+                                      item?.image.endsWith(".pdf")
+                                        ? FILE
+                                        : `${WEBSITE_BASE_URL}/chat/${item?.image}`
+                                    }
+                                    alt={item?.image}
+                                    width={1000}
+                                    height={1000}
+                                    quality={100}
+                                    className="object-contain h-full w-full rounded-lg"
+                                  />
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     ))}
                 </div>
 
-                <i
-                  className="w-[3rem] h-[3rem] flex justify-center items-center rounded-l-xl text-webblack text-base fa-solid fa-file-plus cursor-pointer"
-                  onClick={handleFileIconClick}
-                ></i>
-                <input
-                  type="file"
-                  multiple
-                  ref={fileInputRef}
-                  className="hidden"
-                  accept=".jpg,.jpeg,.png, .pdf"
-                  onChange={handleFileChange}
-                />
-                <input
-                  type="text"
-                  placeholder="Send Message"
-                  className=" h-[3rem] w-full px-1 outline-none  placeholder-opacity-100 text-webblack"
-                  name="replyText"
-                  value={replyText}
-                  onChange={(e) => setReplyText(e.target.value)}
-                  onKeyPress={(e) =>
-                    e.key === "Enter" && !isDisabled && handleReplyChat()
-                  }
-                />
-                <i
-                  className="bg-secondary flex justify-center items-center w-[4rem] h-[3rem]  rounded-r-xl text-white text-base fa-solid fa-chevron-right"
-                  onClick={() => !isDisabled && handleReplyChat()}
-                ></i>
+                <div className="flex justify-center items-center m-4 rounded-xl shadow-card border-[2px] border-secondary relative">
+                  <div className="absolute bottom-[115%] left-0 right-0 w-full  overflow-x-auto flex flex-wrap gap-4 bg-white p-2">
+                    {file &&
+                      Object.values(file).map((item, index) => (
+                        <div
+                          className="relative w-16 h-16 border border-gray-300 rounded-md bg-white"
+                          key={index}
+                        >
+                          <i
+                            className="fa-regular fa-times absolute top-0 right-0  bg-red-500 text-white w-5 h-5 text-xs  flex items-center justify-center cursor-pointer"
+                            onClick={() => handleFileDelete(index)}
+                          ></i>
+                          <Image
+                            unoptimized
+                            key={index}
+                            src={
+                              item.type.indexOf("image/") > -1
+                                ? URL.createObjectURL(item)
+                                : FILE
+                            }
+                            alt={item.name}
+                            width={1000}
+                            height={1000}
+                            quality={100}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                      ))}
+                  </div>
+
+                  <i
+                    className="w-[3rem] h-[3rem] flex justify-center items-center rounded-l-xl text-webblack text-base fa-solid fa-file-plus cursor-pointer"
+                    onClick={handleFileIconClick}
+                  ></i>
+                  <input
+                    type="file"
+                    multiple
+                    ref={fileInputRef}
+                    className="hidden"
+                    accept=".jpg,.jpeg,.png, .pdf"
+                    onChange={handleFileChange}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Send Message"
+                    className=" h-[3rem] w-full px-1 outline-none  placeholder-opacity-100 text-webblack"
+                    name="replyText"
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value)}
+                    onKeyPress={(e) =>
+                      e.key === "Enter" && !isDisabled && handleReplyChat()
+                    }
+                  />
+                  <i
+                    className="bg-secondary flex justify-center items-center w-[4rem] h-[3rem]  rounded-r-xl text-white text-base fa-solid fa-chevron-right"
+                    onClick={() => !isDisabled && handleReplyChat()}
+                  ></i>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
