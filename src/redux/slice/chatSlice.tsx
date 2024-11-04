@@ -110,7 +110,7 @@ const chatSlice = createSlice({
       .addCase(getChatNewUnseenCount.rejected, (state) => {
         state.error = "Failed to chat user";
         // state.loading = false;
-        state.unseenCount = { count: 0 };
+        // state.unseenCount = { count: 0 };
       })
       .addCase(getChatNewMessage.pending, (state) => {
         // state.loading = true;
