@@ -441,7 +441,7 @@ const Chat = () => {
                               ).toLocaleTimeString()}
                             </small>
                           </div>
-                          {message.images.length > 0 && (
+                          {message?.images?.length > 0 && (
                             <div
                               className={`flex flex-col gap-2 w-[200px] ${
                                 message.user_id ? "" : "items-end"
