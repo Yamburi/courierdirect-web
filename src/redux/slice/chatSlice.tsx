@@ -12,7 +12,7 @@ import { TChatDetail, TChatUnseenCount } from "@/schemas/chat.schema";
 export type ChatState = {
   loading: boolean;
   error: string | null;
-  unseenCount: TChatUnseenCount | null;
+  unseenCount: TChatUnseenCount;
   insert: TChatDetail | null;
   data: TChatDetail[];
 };
@@ -22,7 +22,7 @@ const initialState: ChatState = {
   loading: false,
   insert: null,
   data: [],
-  unseenCount: null,
+  unseenCount: { count: 0 },
 };
 
 const chatSlice = createSlice({
@@ -36,7 +36,7 @@ const chatSlice = createSlice({
       state.data = [...action.payload, ...state.data];
     },
     updateChatUnseenCount: (state, action) => {
-      state.unseenCount = action.payload;
+      state.unseenCount = state?.unseenCount?.count || 0 + action.payload.count;
     },
   },
   extraReducers: (builder) => {
@@ -96,7 +96,7 @@ const chatSlice = createSlice({
       .addCase(getChatUnseenCount.rejected, (state) => {
         state.error = "Failed to chat user";
         // state.loading = false;
-        state.unseenCount = null;
+        state.unseenCount = { count: 0 };
       })
       .addCase(getChatNewUnseenCount.pending, (state) => {
         // state.loading = true;
@@ -110,7 +110,7 @@ const chatSlice = createSlice({
       .addCase(getChatNewUnseenCount.rejected, (state) => {
         state.error = "Failed to chat user";
         // state.loading = false;
-        state.unseenCount = null;
+        state.unseenCount = { count: 0 };
       })
       .addCase(getChatNewMessage.pending, (state) => {
         // state.loading = true;
