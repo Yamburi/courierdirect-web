@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z, ZodType } from "zod"
 
 export const positiveNumberField = (val: string, min: number = 0) =>

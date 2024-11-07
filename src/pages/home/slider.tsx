@@ -24,7 +24,6 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
         return;
       }
       router.push(`/tracking?trackNo=${trackNo}`);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       errorToast("Something went wrong");
     }

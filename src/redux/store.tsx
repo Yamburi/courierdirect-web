@@ -37,7 +37,6 @@ const rootReducer = combineReducers({
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AppThunkDispatch = ThunkDispatch<RootState, any, AnyAction>;
 export type AppStore = Omit<Store<RootState, AnyAction>, "dispatch"> & {
   dispatch: AppThunkDispatch;

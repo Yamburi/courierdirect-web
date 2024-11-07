@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { LOGO, WHITELOGO } from "@/constants/images";
 import UIButton from "@/components/ui/uibutton";
 import Image from "next/image";

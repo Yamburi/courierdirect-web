@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const config: any = {
   position: "top-right",
   autoClose: 3000,

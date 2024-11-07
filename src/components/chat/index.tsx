@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { errorToast } from "@/lib/toastify";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
@@ -56,7 +54,6 @@ const Chat = () => {
     const value = parseInputType(type, e);
     const valid = value !== null && value !== undefined && value !== "";
     setState((prev) => ({ ...prev, [name]: valid ? value : undefined }));
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     required &&
       valid &&
       setError((prev) => ({
@@ -78,9 +75,7 @@ const Chat = () => {
             data: response?.data,
             callback: () => {
               setState({});
-              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
               userId && showChat && dispatch(getChatDetail({ id: userId }));
-              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
               // userId &&
               //   showChat &&
               //   dispatch(getChatUnseenCount({ id: userId }));
@@ -89,7 +84,6 @@ const Chat = () => {
           })
         );
       }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       errorToast("Something went wrong ");
     }
@@ -145,12 +139,10 @@ const Chat = () => {
   }, [dispatch, userId, showChat, chatData?.data]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     userId && dispatch(getChatUnseenCount({ id: userId }));
   }, [dispatch, userId]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     userId && showChat && dispatch(updateChatUnseenCount({ count: 0 }));
   }, [dispatch, userId, showChat]);
 
@@ -285,7 +277,6 @@ const Chat = () => {
           })
         );
       }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       errorToast("Something went wrong ");
     }
@@ -299,7 +290,6 @@ const Chat = () => {
 
   useEffect(() => {
     const originalTitle = document.title;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let interval: any;
 
     if (chatData?.unseenCount && chatData?.unseenCount?.count > 0) {

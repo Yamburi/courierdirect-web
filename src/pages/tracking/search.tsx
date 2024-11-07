@@ -23,7 +23,6 @@ const Search = () => {
         trackNo: trackNo as string,
       };
       dispatch(trackQuote({ data: dataToSend }));
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       errorToast("Something went wrong ");
     }
@@ -120,7 +119,6 @@ const Search = () => {
                     <hr
                       className={`h-[9px] rounded-md ${
                         trackingRecords.some(
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           (record: any) => record.event_type === step.type
                         )
                           ? "bg-green-500"
