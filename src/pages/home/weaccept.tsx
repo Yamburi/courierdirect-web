@@ -36,9 +36,10 @@ const WeAccept = () => {
                 width={1000}
                 height={1000}
                 src={value.image}
-                alt=""
+                alt="we-accept"
                 className="h-[80px] w-[280px] first:py-2  object-contain "
                 key={i}
+                unoptimized
               />
             ))}
         </div>
