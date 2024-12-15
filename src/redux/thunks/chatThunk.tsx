@@ -49,10 +49,10 @@ export const getChatNewMessage = createAsyncThunk<
 
 export const getChatUnseenCount = createAsyncThunk<
   TChatUnseenCount,
-  { id: string }
->("getChatUnseenCount", async ({ id }) => {
+  { id: string; signal?: AbortSignal }
+>("getChatUnseenCount", async ({ id, signal }) => {
   try {
-    const response = await doGet(`/web/chat/unseen/${id}`);
+    const response = await doGet(`/web/chat/unseen/${id}`, { signal });
     return response;
   } catch (error) {
     throw error;

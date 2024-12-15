@@ -38,6 +38,7 @@ const Chat = () => {
   const [showChat, setShowChat] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
+  const getFetchRef = useRef<AbortController | null>(null);
   const [state, setState] = useState<Partial<TChatInsertSchema>>({
     user_id: userId ?? "",
   });
@@ -139,7 +140,12 @@ const Chat = () => {
   }, [dispatch, userId, showChat, chatData?.data]);
 
   useEffect(() => {
-    userId && dispatch(getChatUnseenCount({ id: userId }));
+    getFetchRef.current?.abort();
+    getFetchRef.current = new AbortController();
+    userId &&
+      dispatch(
+        getChatUnseenCount({ id: userId, signal: getFetchRef?.current?.signal })
+      );
   }, [dispatch, userId]);
 
   useEffect(() => {
@@ -204,13 +210,11 @@ const Chat = () => {
     const maxFileSize = 1 * 1024 * 1024; // 1MB individual file size in bytes
     const existingFilesArray = file ? Array.from(file) : [];
 
-    // Validate the number of files
     if (existingFilesArray.length + files.length > 5) {
       errorToast("You can upload a maximum of 5 files.");
       return;
     }
 
-    // Validate individual file sizes and total size
     const combinedFiles = existingFilesArray.concat(Array.from(files));
 
     const totalSize = combinedFiles.reduce((acc, file) => acc + file.size, 0);
@@ -313,11 +317,14 @@ const Chat = () => {
       {chatData?.loading && <UILoader />}
       <div className="fixed right-[2%] bottom-[2%] flex gap-4 items-center z-50">
         {showHelp && (
-          <div className="relative bg-[#E8ECF2] rounded-[2rem] px-9 py-3 h-fit flex items-center justify-center shadow-card text-sm">
-            <i
-              className="fa-regular fa-times absolute top-[-10%] left-[-2%] bg-secondary text-white flex justify-center items-center h-[20px] w-[20px] rounded-full text-[10px] cursor-pointer"
-              onClick={() => setShowHelp(false)}
-            ></i>
+          <div
+            className="relative bg-[#E8ECF2] rounded-[2rem] px-9 py-3 h-fit flex items-center justify-center shadow-card text-sm"
+            onClick={() => {
+              setShowHelp(false);
+              setShowChat((prev) => !prev);
+            }}
+          >
+            <i className="fa-regular fa-times absolute top-[-10%] left-[-2%] bg-secondary text-white flex justify-center items-center h-[20px] w-[20px] rounded-full text-[10px] cursor-pointer"></i>
             Need any help
           </div>
         )}

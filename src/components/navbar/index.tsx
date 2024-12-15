@@ -3,8 +3,10 @@ import UIButton from "@/components/ui/uibutton";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const router = useRouter();
   const [showNavModal, setShowNavModal] = useState<boolean>(false);
   const navModalRef = useRef<HTMLDivElement>(null);
 
@@ -28,16 +30,6 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showNavModal]);
-
-  // useEffect(() => {
-  //   const fetchChats = () => {
-  //     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  //     userId && dispatch(getChatUnseenCount({ id: userId }));
-  //   };
-  //   fetchChats();
-  //   const intervalId = setInterval(fetchChats, 1 * 60 * 1000);
-  //   return () => clearInterval(intervalId);
-  // }, [dispatch, userId]);
 
   return (
     <>
@@ -80,12 +72,44 @@ const Navbar = () => {
             <Image src={LOGO} alt="logo" unoptimized />
           </Link>
           <nav className="max-[900px]:hidden flex gap-6 items-center">
-            <Link href="/">Home</Link>
+            <Link
+              href="/"
+              className={
+                router.pathname === "/" ? "text-primary font-semibold" : ""
+              }
+            >
+              Home
+            </Link>
 
-            <Link href="/service">Services</Link>
+            <Link
+              href="/service"
+              className={
+                router.pathname === "/service"
+                  ? "text-primary font-semibold"
+                  : ""
+              }
+            >
+              Services
+            </Link>
 
-            <Link href="/faq">FAQ</Link>
-            <Link href="/contact-us">Contact Us</Link>
+            <Link
+              href="/faq"
+              className={
+                router.pathname === "/faq" ? "text-primary font-semibold" : ""
+              }
+            >
+              FAQ
+            </Link>
+            <Link
+              href="/contact-us"
+              className={
+                router.pathname === "/contact-us"
+                  ? "text-primary font-semibold"
+                  : ""
+              }
+            >
+              Contact Us
+            </Link>
             <UIButton
               href="/tracking"
               type="primary"
@@ -128,7 +152,11 @@ const Navbar = () => {
                 <div className="flex flex-col gap-2 px-4 py-4 text-base font-medium">
                   <Link
                     href="/"
-                    className="py-2 hover:text-primary transition-colors duration-200 border-b-2 border-gray-200"
+                    className={`${
+                      router.pathname === "/"
+                        ? "text-primary font-semibold"
+                        : ""
+                    } py-2 hover:text-primary transition-colors duration-200 border-b-2 border-gray-200`}
                     onClick={() => setShowNavModal(false)}
                   >
                     Home
@@ -136,27 +164,39 @@ const Navbar = () => {
 
                   <Link
                     href="/services"
-                    className="py-2 hover:text-primary transition-colors duration-200 border-b-2 border-gray-200"
+                    className={`${
+                      router.pathname === "/services"
+                        ? "text-primary font-semibold"
+                        : ""
+                    } py-2 hover:text-primary transition-colors duration-200 border-b-2 border-gray-200`}
                     onClick={() => setShowNavModal(false)}
                   >
                     Services
                   </Link>
                   <Link
                     href="/faq"
-                    className="py-2 hover:text-primary transition-colors duration-200 border-b-2 border-gray-200"
+                    className={`${
+                      router.pathname === "/faq"
+                        ? "text-primary font-semibold"
+                        : ""
+                    } py-2 hover:text-primary transition-colors duration-200 border-b-2 border-gray-200`}
                     onClick={() => setShowNavModal(false)}
                   >
                     FAQ
                   </Link>
                   <Link
                     href="/contact-us"
-                    className="py-2 hover:text-primary transition-colors duration-200 border-b-2 border-gray-200"
+                    className={`${
+                      router.pathname === "/contact-us"
+                        ? "text-primary font-semibold"
+                        : ""
+                    } py-2 hover:text-primary transition-colors duration-200 border-b-2 border-gray-200`}
                     onClick={() => setShowNavModal(false)}
                   >
                     Contact Us
                   </Link>
                   <UIButton
-                    href=""
+                    href="/tracking"
                     type="primary"
                     style={{ marginTop: "0.5rem" }}
                     label={
