@@ -140,12 +140,7 @@ const Chat = () => {
   }, [dispatch, userId, showChat, chatData?.data]);
 
   useEffect(() => {
-    getFetchRef.current?.abort();
-    getFetchRef.current = new AbortController();
-    userId &&
-      dispatch(
-        getChatUnseenCount({ id: userId, signal: getFetchRef?.current?.signal })
-      );
+    userId && dispatch(getChatUnseenCount({ id: userId }));
   }, [dispatch, userId]);
 
   useEffect(() => {
@@ -165,8 +160,13 @@ const Chat = () => {
 
       try {
         if (userId) {
+          getFetchRef.current?.abort();
+          getFetchRef.current = new AbortController();
           const response = await dispatch(
-            getChatNewUnseenCount({ id: userId })
+            getChatNewUnseenCount({
+              id: userId,
+              signal: getFetchRef?.current?.signal,
+            })
           );
           if (response.payload && (response.payload as TChatUnseenCount)) {
             dispatch(updateChatUnseenCount(response.payload));
