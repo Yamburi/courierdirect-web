@@ -318,7 +318,7 @@ const Chat = () => {
       <div className="fixed right-[2%] bottom-[2%] flex gap-4 items-center z-50">
         {showHelp && (
           <div
-            className="relative bg-[#E8ECF2] rounded-[2rem] px-9 py-3 h-fit flex items-center justify-center shadow-card text-sm"
+            className="relative bg-[#E8ECF2] rounded-[2rem] px-9 py-3 h-fit flex items-center justify-center shadow-card text-sm cursor-pointer"
             onClick={() => {
               setShowHelp(false);
               setShowChat((prev) => !prev);

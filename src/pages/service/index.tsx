@@ -35,15 +35,28 @@ const ServiceIndex = ({ service, servicedetail }: ServiceProps) => {
 
 export default ServiceIndex;
 export async function getServerSideProps() {
-  const services = await axios.get(`${API_BASE_URL}/web/service`);
-  const servicedetails = await axios.get(`${API_BASE_URL}/web/service-detail`);
+  try {
+    const services = await axios.get(`${API_BASE_URL}/web/service`);
+    const servicedetails = await axios.get(
+      `${API_BASE_URL}/web/service-detail`
+    );
 
-  return {
-    props: {
-      service: services?.data?.data,
-      servicedetail: servicedetails?.data?.data,
-      title: `Courier Direct | Services`,
-      url: `https://www.courierdirect.com/service`,
-    },
-  };
+    return {
+      props: {
+        service: services?.data?.data,
+        servicedetail: servicedetails?.data?.data,
+        title: `Courier Direct | Services`,
+        url: `https://www.courierdirect.com/service`,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        service: [],
+        servicedetail: [],
+        title: `Courier Direct | Services`,
+        url: `https://www.courierdirect.com/service`,
+      },
+    };
+  }
 }

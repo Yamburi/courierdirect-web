@@ -11,12 +11,15 @@ import { WEBSITE_BASE_URL } from "@/lib/config";
 import { TSlider } from "@/schemas/slider.schema";
 import { useRouter } from "next/router";
 import { errorToast } from "@/lib/toastify";
+import { useAppDispatch } from "@/redux/store";
+import { trackQuote } from "@/redux/thunks/trackThunk";
 interface SliderProps {
   sliderList: TSlider[];
 }
 const Slider: React.FC<SliderProps> = ({ sliderList }) => {
   const [trackNo, setTrackNo] = useState<string>("");
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const handleTrack = () => {
     try {
       if (!trackNo) {
@@ -24,6 +27,10 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
         return;
       }
       router.push(`/tracking?trackNo=${trackNo}`);
+      const dataToSend = {
+        trackNo: trackNo as string,
+      };
+      dispatch(trackQuote({ data: dataToSend }));
     } catch (error) {
       errorToast("Something went wrong");
     }

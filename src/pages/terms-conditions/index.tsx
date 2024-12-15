@@ -27,13 +27,23 @@ const TocIndex = ({ content }: PrivacyProps) => {
 
 export default TocIndex;
 export async function getServerSideProps() {
-  const contents = await axios.get(`${API_BASE_URL}/web/content`);
+  try {
+    const contents = await axios.get(`${API_BASE_URL}/web/content`);
 
-  return {
-    props: {
-      content: contents?.data?.data,
-      title: `Courier Direct | Terms & Condition`,
-      url: `https://www.courierdirect.com/terms-conditions`,
-    },
-  };
+    return {
+      props: {
+        content: contents?.data?.data,
+        title: `Courier Direct | Terms & Condition`,
+        url: `https://www.courierdirect.com/terms-conditions`,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        content: [],
+        title: `Courier Direct | Terms & Condition`,
+        url: `https://www.courierdirect.com/terms-conditions`,
+      },
+    };
+  }
 }

@@ -29,13 +29,23 @@ const FaqIndex = ({ faq }: ServiceProps) => {
 
 export default FaqIndex;
 export async function getServerSideProps() {
-  const faqs = await axios.get(`${API_BASE_URL}/web/faq`);
+  try {
+    const faqs = await axios.get(`${API_BASE_URL}/web/faq`);
 
-  return {
-    props: {
-      faq: faqs?.data?.data,
-      title: `Courier Direct | FAQ`,
-      url: `https://www.courierdirect.com/faq`,
-    },
-  };
+    return {
+      props: {
+        faq: faqs?.data?.data,
+        title: `Courier Direct | FAQ`,
+        url: `https://www.courierdirect.com/faq`,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        faq: [],
+        title: `Courier Direct | FAQ`,
+        url: `https://www.courierdirect.com/faq`,
+      },
+    };
+  }
 }

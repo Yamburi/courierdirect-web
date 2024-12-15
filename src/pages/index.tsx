@@ -43,18 +43,31 @@ export default function Home({
   );
 }
 export async function getServerSideProps() {
-  const sliders = await axios.get(`${API_BASE_URL}/web/slider`);
-  const whychoouss = await axios.get(`${API_BASE_URL}/web/why-us`);
-  const contents = await axios.get(`${API_BASE_URL}/web/content`);
-  const testimonials = await axios.get(`${API_BASE_URL}/web/testimonial`);
-  return {
-    props: {
-      slider: sliders?.data?.data,
-      // service: services?.data?.data,
-      whychoous: whychoouss?.data?.data,
-      content: contents?.data?.data,
-      testimonial: testimonials?.data?.data,
-    },
-    // revalidate: 10,
-  };
+  try {
+    const sliders = await axios.get(`${API_BASE_URL}/web/slider`);
+    const whychoouss = await axios.get(`${API_BASE_URL}/web/why-us`);
+    const contents = await axios.get(`${API_BASE_URL}/web/content`);
+    const testimonials = await axios.get(`${API_BASE_URL}/web/testimonial`);
+    return {
+      props: {
+        slider: sliders?.data?.data,
+        // service: services?.data?.data,
+        whychoous: whychoouss?.data?.data,
+        content: contents?.data?.data,
+        testimonial: testimonials?.data?.data,
+      },
+      // revalidate: 10,
+    };
+  } catch (error) {
+    return {
+      props: {
+        slider: [],
+        // service: services?.data?.data,
+        whychoous: [],
+        content: [],
+        testimonial: [],
+      },
+      // revalidate: 10,
+    };
+  }
 }

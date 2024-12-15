@@ -27,13 +27,23 @@ const PrivacyPolicyIndex = ({ content }: PrivacyProps) => {
 
 export default PrivacyPolicyIndex;
 export async function getServerSideProps() {
-  const contents = await axios.get(`${API_BASE_URL}/web/content`);
+  try {
+    const contents = await axios.get(`${API_BASE_URL}/web/content`);
 
-  return {
-    props: {
-      content: contents?.data?.data,
-      title: `Courier Direct | Privacy Policy`,
-      url: `https://www.courierdirect.com/privacy-policy`,
-    },
-  };
+    return {
+      props: {
+        content: contents?.data?.data,
+        title: `Courier Direct | Privacy Policy`,
+        url: `https://www.courierdirect.com/privacy-policy`,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        content: [],
+        title: `Courier Direct | Privacy Policy`,
+        url: `https://www.courierdirect.com/privacy-policy`,
+      },
+    };
+  }
 }
