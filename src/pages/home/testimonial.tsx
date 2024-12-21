@@ -60,12 +60,12 @@ const Testimonial: React.FC<TestimonialProps> = ({ testimonialList }) => {
                 <div key={value.id} className="w-full  h-auto rounded-md  ">
                   <div className="flex flex-col gap-3">
                     <div className=" flex flex-col justify-center gap-2">
-                      <div className="">
+                      <div className="h-[280px]">
                         <Image
                           unoptimized
                           width={1000}
                           height={1000}
-                          className=" w-full h-full object-contain"
+                          className=" w-full h-full object-cover"
                           src={`${WEBSITE_BASE_URL}/testimonial/${value.image}`}
                           alt={value.name}
                         />
