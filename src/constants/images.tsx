@@ -12,7 +12,7 @@ import ZAPPER from "../../public/images/zapper.png";
 import LANDING from "../../public/images/landing.png";
 
 import PARCEL from "../../public/images/carbon_delivery-parcel.png";
-import TrackBanner from "../../public/images/trakimg.jpeg";
+import TrackBanner from "../../public/images/ad.jpg";
 
 import FILE from "../../public/images/file.png";
 import CYCLE from "../../public/images/cycle.png";

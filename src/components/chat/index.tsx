@@ -111,9 +111,16 @@ const Chat = () => {
       try {
         if (userId && showChat && chatData?.data?.length > 0) {
           const response = await dispatch(getChatNewMessage({ id: userId }));
+
           if (
             response.payload &&
-            (response.payload as TChatDetail[]).length > 0
+            Array.isArray(response.payload) &&
+            response.payload.some(
+              (newMsg) =>
+                !chatData.data.some(
+                  (existingMsg) => existingMsg.id === newMsg.id
+                )
+            )
           ) {
             dispatch(updateChatMessage(response.payload));
             retryAttempts = 0;
@@ -142,10 +149,6 @@ const Chat = () => {
   useEffect(() => {
     userId && dispatch(getChatUnseenCount({ id: userId }));
   }, [dispatch, userId]);
-
-  useEffect(() => {
-    userId && showChat && dispatch(updateChatUnseenCount({ count: 0 }));
-  }, [dispatch, userId, showChat]);
 
   useEffect(() => {
     let isPolling = true;

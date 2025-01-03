@@ -1,17 +1,24 @@
 import { CYCLE, LOC, NODATA, TrackBanner } from "@/constants/images";
 import { errorToast } from "@/lib/toastify";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { trackQuote } from "@/redux/thunks/trackThunk";
 import { useRouter } from "next/router";
 import UILoader from "@/components/ui/uiloader";
 import Link from "next/link";
+import { resetTrackData } from "@/redux/slice/trackSlice";
 
 const Search = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { trackNo } = router.query;
+
+  useEffect(() => {
+    if (!trackNo || trackNo === "") {
+      dispatch(resetTrackData());
+    }
+  }, [trackNo, dispatch]);
 
   const handleTrack = async () => {
     try {
@@ -52,6 +59,12 @@ const Search = () => {
     { label: "Out for Delivery", type: "COMPLETED" },
   ];
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetTrackData());
+    };
+  }, [dispatch]);
+
   return (
     <>
       {trackData?.loading && <UILoader />}
@@ -88,14 +101,14 @@ const Search = () => {
                 type="text"
                 placeholder="Enter Tracking Number..."
                 className="  w-full bg-slate-50 max-small:w-full px-1 outline-none placeholder-opacity-100"
-                value={trackNo}
+                value={trackNo || ""}
                 onChange={(e) =>
                   router.push(`/tracking?trackNo=${e.target.value}`)
                 }
                 onKeyPress={(e) => e.key === "Enter" && handleTrack()}
               />
               <div
-                className="bg-primary shadow-lg rounded-r-xl text-white flex justify-center items-center w-[8rem]"
+                className="bg-primary cursor-pointer shadow-lg rounded-r-xl text-white flex justify-center items-center w-[8rem]"
                 onClick={handleTrack}
               >
                 Track
@@ -103,7 +116,9 @@ const Search = () => {
             </div>
           </div>
 
-          {Array.isArray(trackingRecords) && trackingRecords?.length > 0 ? (
+          {Array.isArray(trackingRecords) &&
+          trackingRecords?.length > 0 &&
+          trackNo ? (
             <div className="flex flex-col gap-5">
               <div className="text-primary font-semibold">#{trackNo}</div>
               {/* <div className="text-secondary pb-2">Dispatched for delivery</div>
@@ -217,16 +232,16 @@ const Search = () => {
                 <div className="border-[#D7C9CE] border-x max-[900px]:hidden"></div>
 
                 <div className="flex flex-col md:justify-center md:items-center gap-2 flex-1 ">
-                  <div className="relative">
-                    <div className=" h-[475px] rounded-2xl  md:w-[430px]    bg-black">
+                  <Link href="https://esquire.co.za/reseller" target="_blank">
+                    <div className=" h-[500px] rounded-2xl  md:w-[430px]    bg-black">
                       <Image
-                        className="md:w-[430px] rounded-2xl  h-full object-cover absolute opacity-65 bg-black"
+                        className="md:w-[430px] rounded-2xl  h-full object-cover"
                         src={TrackBanner}
                         alt="TrackBanner"
                         unoptimized
                       />
                     </div>
-                    <div className="absolute inset-0 text-white flex flex-col gap-3 justify-center items-center">
+                    {/* <div className="absolute inset-0 text-white flex flex-col gap-3 justify-center items-center">
                       <div className="text-2xl font-medium">Ad Banner</div>
                       <p className="text-sm p-5 text-center">
                         Lorem ipsum dolor sit amet consectetur. Morbi sem urna
@@ -236,8 +251,8 @@ const Search = () => {
                         aenean sit dignissim. Vestibulum tellus elit elementum
                         duis a vitae.
                       </p>
-                    </div>
-                  </div>
+                    </div> */}
+                  </Link>
                 </div>
               </div>
             </div>

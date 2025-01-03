@@ -95,7 +95,7 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
               onKeyPress={(e) => e.key === "Enter" && handleTrack()}
             />
             <div
-              className="bg-secondary flex justify-center items-center w-[3rem] h-[3rem]  rounded-r-xl"
+              className="bg-secondary flex justify-center items-center w-[3rem] h-[3rem]  rounded-r-xl cursor-pointer"
               onClick={handleTrack}
             >
               <i className="text-white text-base fa-solid fa-chevron-right"></i>
