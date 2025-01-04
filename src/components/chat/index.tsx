@@ -76,7 +76,10 @@ const Chat = () => {
             data: response?.data,
             callback: () => {
               setState({});
-              userId && showChat && dispatch(getChatDetail({ id: userId }));
+              // userId && showChat && dispatch(getChatDetail({ id: userId }));
+              // userId &&
+              //   showChat &&
+              //   dispatch(updateChatUnseenCount({ count: 0 }));
               // userId &&
               //   showChat &&
               //   dispatch(getChatUnseenCount({ id: userId }));
@@ -147,8 +150,8 @@ const Chat = () => {
   }, [dispatch, userId, showChat, chatData?.data]);
 
   useEffect(() => {
-    userId && dispatch(getChatUnseenCount({ id: userId }));
-  }, [dispatch, userId]);
+    userId && !showChat && dispatch(getChatUnseenCount({ id: userId }));
+  }, [dispatch, userId, showChat]);
 
   useEffect(() => {
     let isPolling = true;
@@ -162,7 +165,7 @@ const Chat = () => {
       isRequestInProgress = true;
 
       try {
-        if (userId) {
+        if (userId && !showChat) {
           getFetchRef.current?.abort();
           getFetchRef.current = new AbortController();
           const response = await dispatch(
@@ -172,6 +175,7 @@ const Chat = () => {
             })
           );
           if (response.payload && (response.payload as TChatUnseenCount)) {
+            console.log(response?.payload, "rrr");
             dispatch(updateChatUnseenCount(response.payload));
             retryAttempts = 0;
           }
@@ -194,7 +198,7 @@ const Chat = () => {
     return () => {
       isPolling = false;
     };
-  }, [dispatch, userId]);
+  }, [dispatch, userId, showChat]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const handleFileIconClick = () => {

@@ -7,7 +7,7 @@ import {
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const insertChat = createAsyncThunk<
-  TChatDetail,
+  TChatDetail[],
   { data: TChatInsertSchema; callback?: () => void }
 >("insertChat", async ({ data, callback }) => {
   try {

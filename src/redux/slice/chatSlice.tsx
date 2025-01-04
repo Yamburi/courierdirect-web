@@ -13,7 +13,7 @@ export type ChatState = {
   loading: boolean;
   error: string | null;
   unseenCount: TChatUnseenCount;
-  insert: TChatDetail | null;
+  insert: TChatDetail[] | null;
   data: TChatDetail[];
 };
 
@@ -36,7 +36,7 @@ const chatSlice = createSlice({
       state.data = [...action.payload, ...state.data];
     },
     updateChatUnseenCount: (state, action) => {
-      state.unseenCount = state?.unseenCount?.count || 0 + action.payload.count;
+      state.unseenCount = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -49,12 +49,11 @@ const chatSlice = createSlice({
       .addCase(insertChat.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.insert = action.payload;
+        state.data = action.payload;
       })
       .addCase(insertChat.rejected, (state) => {
         state.error = "Failed to chat user";
         state.loading = false;
-        state.insert = null;
       })
 
       .addCase(getChatDetail.pending, (state) => {
