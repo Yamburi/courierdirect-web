@@ -233,9 +233,9 @@ const Search = () => {
 
                 <div className="flex flex-col md:justify-center md:items-center gap-2 flex-1 ">
                   <Link href="https://esquire.co.za/reseller" target="_blank">
-                    <div className=" h-[500px] rounded-2xl  md:w-[430px]    bg-black">
+                    <div className=" h-auto rounded-2xl  md:w-[430px]    bg-black">
                       <Image
-                        className="md:w-[430px] rounded-2xl  h-full object-cover"
+                        className="md:w-[430px] rounded-2xl  h-full object-contain"
                         src={TrackBanner}
                         alt="TrackBanner"
                         unoptimized

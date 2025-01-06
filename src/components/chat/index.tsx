@@ -96,8 +96,8 @@ const Chat = () => {
   const chatData = useAppSelector((state) => state.chatState);
 
   useEffect(() => {
-    userId && showChat && dispatch(getChatDetail({ id: userId }));
-    userId && showChat && dispatch(updateChatUnseenCount({ count: 0 }));
+    if(userId && showChat){ dispatch(getChatDetail({ id: userId }));
+    dispatch(updateChatUnseenCount({ count: 0 }));}
   }, [dispatch, userId, showChat]);
 
   useEffect(() => {
