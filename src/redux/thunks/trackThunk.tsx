@@ -1,11 +1,12 @@
-import { doPost } from "@/lib/axios";
+import { doGet } from "@/lib/axios";
+import { TTrack } from "@/schemas/trackSchema";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const trackQuote = createAsyncThunk<any, { data: { trackNo: string } }>(
+export const trackQuote = createAsyncThunk<TTrack, { id: string }>(
   "trackQuote",
-  async ({ data }) => {
+  async ({ id }) => {
     try {
-      const response = await doPost(`/web/track`, data);
+      const response = await doGet(`/web/track/${id}`);
       return response;
     } catch (error) {
       throw error;

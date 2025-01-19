@@ -51,6 +51,7 @@ export const parseInputType = (
 ) => {
   if (type === "checkbox" && "checked" in e.target) return e.target.checked;
   if (type === "number") return e.target.value;
+  if (type === "password") return e.target.value.trim();
   if (type === "file" && "files" in e.target) return e.target.files;
   if (type === "list") return e.target.value ?? [];
   return e.target.value;

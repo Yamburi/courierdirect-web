@@ -27,10 +27,8 @@ const Slider: React.FC<SliderProps> = ({ sliderList }) => {
         return;
       }
       router.push(`/tracking?trackNo=${trackNo}`);
-      const dataToSend = {
-        trackNo: trackNo as string,
-      };
-      dispatch(trackQuote({ data: dataToSend }));
+
+      dispatch(trackQuote({ id: trackNo as string }));
     } catch (error) {
       errorToast("Something went wrong");
     }

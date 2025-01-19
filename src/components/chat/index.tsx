@@ -96,8 +96,10 @@ const Chat = () => {
   const chatData = useAppSelector((state) => state.chatState);
 
   useEffect(() => {
-    if(userId && showChat){ dispatch(getChatDetail({ id: userId }));
-    dispatch(updateChatUnseenCount({ count: 0 }));}
+    if (userId && showChat) {
+      dispatch(getChatDetail({ id: userId }));
+      dispatch(updateChatUnseenCount({ count: 0 }));
+    }
   }, [dispatch, userId, showChat]);
 
   useEffect(() => {
@@ -175,7 +177,6 @@ const Chat = () => {
             })
           );
           if (response.payload && (response.payload as TChatUnseenCount)) {
-            console.log(response?.payload, "rrr");
             dispatch(updateChatUnseenCount(response.payload));
             retryAttempts = 0;
           }

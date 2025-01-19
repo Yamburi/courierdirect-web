@@ -1,5 +1,8 @@
 const API_BASE_URL = "https://api.courierdirect.com/api";
 const WEBSITE_BASE_URL = "https://api.courierdirect.com";
+
+// const API_BASE_URL = "https://courier-api.yamburi.co.za/api";
+// const WEBSITE_BASE_URL = "https://courier-api.yamburi.co.za";
 const SITE_URL = "https://www.courierdirect.com";
 // const API_BASE_URL = "http://127.0.0.1:4400/api";
 // const WEBSITE_BASE_URL = "http://127.0.0.1:4400";

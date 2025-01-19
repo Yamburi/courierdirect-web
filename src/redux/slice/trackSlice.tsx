@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { trackQuote } from "../thunks/trackThunk";
+import { TTrack } from "@/schemas/trackSchema";
 
 export type TrackState = {
   loading: boolean;
   error: string | null;
-  data: any | null;
+  data: TTrack | null;
 };
 
 const initialState: TrackState = {

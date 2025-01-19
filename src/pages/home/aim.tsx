@@ -21,7 +21,7 @@ const Aim: React.FC<aimProps> = ({ aimContent }) => {
             </p>
             <div className="leading-8 text-base font-medium">
               <div
-                dangerouslySetInnerHTML={{ __html: aimContent[0].aim ?? "" }}
+                dangerouslySetInnerHTML={{ __html: aimContent[0]?.aim ?? "" }}
               />
             </div>
           </div>

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import UILoader from "@/components/ui/uiloader";
 import Link from "next/link";
 import { resetTrackData } from "@/redux/slice/trackSlice";
+import { TTrackHistory } from "@/schemas/trackSchema";
 
 const Search = () => {
   const dispatch = useAppDispatch();
@@ -15,10 +16,18 @@ const Search = () => {
   const { trackNo } = router.query;
 
   useEffect(() => {
-    if (!trackNo || trackNo === "") {
-      dispatch(resetTrackData());
+    if (trackNo && router.isReady) {
+      dispatch(trackQuote({ id: trackNo as string }));
     }
-  }, [trackNo, dispatch]);
+  }, [router.isReady, dispatch]);
+
+  useEffect(() => {
+    if (router.isReady) {
+      if (!trackNo || trackNo === "") {
+        dispatch(resetTrackData());
+      }
+    }
+  }, [trackNo, router.isReady, dispatch]);
 
   const handleTrack = async () => {
     try {
@@ -26,37 +35,35 @@ const Search = () => {
         errorToast("Tracking No. is required");
         return;
       }
-      const dataToSend = {
-        trackNo: trackNo as string,
-      };
-      dispatch(trackQuote({ data: dataToSend }));
+
+      dispatch(trackQuote({ id: trackNo as string }));
     } catch (error) {
       errorToast("Something went wrong ");
     }
   };
 
   const trackData = useAppSelector((state) => state.trackState);
-  const trackingRecords = trackData?.data?.records || [];
+  const trackingRecords = trackData?.data?.history || [];
 
   const getEventIcon = (eventType: string) => {
     switch (eventType) {
-      case "CREATED":
+      case "Delivery Created":
         return "fa-file-alt";
-      case "INBOUND":
-        return "fa-arrow-down";
-      case "OUTBOUND":
-        return "fa-arrow-up";
-      case "COMPLETED":
+      case "Product Scanned":
+        return "fa-scanner-gun";
+      case "Out For Delivery":
+        return "fa-truck-fast";
+      case "Delivered":
         return "fa-check-circle";
       default:
         return "fa-info-circle";
     }
   };
   const eventSteps = [
-    { label: "Order Created", type: "CREATED" },
-    { label: "Package Picked Up", type: "INBOUND" },
-    { label: "In Transit", type: "OUTBOUND" },
-    { label: "Out for Delivery", type: "COMPLETED" },
+    { status: "Delivery Created" },
+    { status: "Product Scanned" },
+    { status: "Out For Delivery" },
+    { status: "Delivered" },
   ];
 
   useEffect(() => {
@@ -134,13 +141,14 @@ const Search = () => {
                     <hr
                       className={`h-[9px] rounded-md ${
                         trackingRecords.some(
-                          (record: any) => record.event_type === step.type
+                          (record: TTrackHistory) =>
+                            record.status === step.status
                         )
                           ? "bg-green-500"
                           : "bg-primary"
                       }`}
                     />
-                    <p className="text-sm">{step.label}</p>
+                    <p className="text-sm">{step.status}</p>
                   </div>
                 ))}
               </div>
@@ -151,7 +159,7 @@ const Search = () => {
                     <div className="py-3 px-3 bg-[#F3E8E8] rounded-xl shadow-lg  flex gap-5 items-center">
                       <i className="fa-solid fa-chevron-down"></i>
                       <div className="text-lg font-semibold">
-                        Shipment summary
+                        Shipment Summary
                       </div>
                     </div>
 
@@ -165,21 +173,25 @@ const Search = () => {
                             <div className="flex items-center justify-center w-10 h-10  rounded-full">
                               <i
                                 className={`fa ${getEventIcon(
-                                  record.event_type
+                                  record.status
                                 )} text-2xl text-primary`}
                               ></i>
                             </div>
                             <div className="flex flex-col">
                               <span className="text-lg font-semibold text-primary">
-                                {record.event_name} - {record.branch_code}
+                                {record.status}
                               </span>
                               <span className="text-sm text-gray-500">
-                                Date: {record.event_date} | Time:{" "}
-                                {record.event_time} (UTC{record.utc_time_zone})
+                                Date:{" "}
+                                {new Date(record.created_at).toDateString()} |
+                                Time:{" "}
+                                {new Date(
+                                  record.created_at
+                                ).toLocaleTimeString()}
                               </span>
-                              <span className="text-sm text-gray-500">
-                                Event Type: {record.event_type}
-                              </span>
+                              {/* <span className="text-sm text-gray-500">
+                                Event Type: {record.status}
+                              </span> */}
                             </div>
                           </div>
                         ))}

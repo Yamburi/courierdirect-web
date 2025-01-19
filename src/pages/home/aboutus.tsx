@@ -33,7 +33,7 @@ const AboutUs: React.FC<aimProps> = ({ aboutContent }) => {
             <div className="leading-8 text-base font-medium">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: aboutContent[0].about ?? "",
+                  __html: aboutContent[0]?.about ?? "",
                 }}
               />
             </div>
