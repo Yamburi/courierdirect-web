@@ -1,7 +1,7 @@
 import { CYCLE, LOC, NODATA, TrackBanner } from "@/constants/images";
 import { errorToast } from "@/lib/toastify";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { trackQuote } from "@/redux/thunks/trackThunk";
 import { useRouter } from "next/router";
@@ -14,9 +14,10 @@ const Search = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { trackNo } = router.query;
-
+  const [quoteId, setQuoteId] = useState<string>("");
   useEffect(() => {
     if (trackNo && router.isReady) {
+      setQuoteId(trackNo as string);
       dispatch(trackQuote({ id: trackNo as string }));
     }
   }, [router.isReady, dispatch]);
@@ -25,18 +26,19 @@ const Search = () => {
     if (router.isReady) {
       if (!trackNo || trackNo === "") {
         dispatch(resetTrackData());
+        setQuoteId("");
       }
     }
   }, [trackNo, router.isReady, dispatch]);
 
   const handleTrack = async () => {
     try {
-      if (!trackNo) {
+      if (!quoteId) {
         errorToast("Tracking No. is required");
         return;
       }
-
-      dispatch(trackQuote({ id: trackNo as string }));
+      router.push(`/tracking?trackNo=${quoteId}`);
+      dispatch(trackQuote({ id: quoteId as string }));
     } catch (error) {
       errorToast("Something went wrong ");
     }
@@ -56,7 +58,7 @@ const Search = () => {
       case "Delivered":
         return "fa-check-circle";
       default:
-        return "fa-info-circle";
+        return "fa-rectangle-xmark";
     }
   };
   const eventSteps = [
@@ -108,10 +110,8 @@ const Search = () => {
                 type="text"
                 placeholder="Enter Tracking Number..."
                 className="  w-full bg-slate-50 max-small:w-full px-1 outline-none placeholder-opacity-100"
-                value={trackNo || ""}
-                onChange={(e) =>
-                  router.push(`/tracking?trackNo=${e.target.value}`)
-                }
+                value={quoteId || ""}
+                onChange={(e) => setQuoteId(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleTrack()}
               />
               <div
