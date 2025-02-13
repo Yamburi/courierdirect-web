@@ -60,7 +60,7 @@ export const parseInputType = (
 export const copyToClipboard = (val: string) => {
   if (!navigator.clipboard) return errorToast("Cannot copy!");
   navigator.clipboard.writeText(val);
-  successToast("Coppied!");
+  successToast("Copied!");
 };
 
 //!Zod

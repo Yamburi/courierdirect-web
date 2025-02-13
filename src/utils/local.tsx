@@ -21,7 +21,7 @@ export const generateUserId = () => {
 
 export { cachedUuid };
 
-export const getUserIdFromLocalStorage = () => {
+export const getUserEmailFromLocalStorage = () => {
   const token =
     typeof window !== "undefined"
       ? localStorage.getItem("courier-direct-chat-user")

@@ -15,8 +15,12 @@ import {
   TChatInsertSchema,
   TChatUnseenCount,
 } from "@/schemas/chat.schema";
-import { parseFormData, parseInputType, validateSchema } from "@/utils/helpers";
-import { getUserIdFromLocalStorage } from "@/utils/local";
+import {
+  generateUniqueUserId,
+  parseFormData,
+  parseInputType,
+  validateSchema,
+} from "@/utils/helpers";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import UIInput from "../ui/uiinput";
 import UIButton from "../ui/uibutton";
@@ -30,9 +34,12 @@ import {
   updateChatUnseenCount,
 } from "@/redux/slice/chatSlice";
 import UILoader from "../ui/uiloader";
+import { getUserEmailFromLocalStorage } from "@/utils/local";
+import moment from "moment";
 
 const Chat = () => {
-  const userId = getUserIdFromLocalStorage();
+  const userId = generateUniqueUserId();
+  const userEmail = getUserEmailFromLocalStorage();
   const dispatch = useAppDispatch();
   const [showHelp, setShowHelp] = useState<boolean>(true);
   const [showChat, setShowChat] = useState<boolean>(false);
@@ -76,13 +83,10 @@ const Chat = () => {
             data: response?.data,
             callback: () => {
               setState({});
-              // userId && showChat && dispatch(getChatDetail({ id: userId }));
-              // userId &&
-              //   showChat &&
-              //   dispatch(updateChatUnseenCount({ count: 0 }));
-              // userId &&
-              //   showChat &&
-              //   dispatch(getChatUnseenCount({ id: userId }));
+              localStorage.setItem(
+                "courier-direct-chat-user",
+                response?.data?.email
+              );
               dispatch(resetChatInsertData());
             },
           })
@@ -96,11 +100,11 @@ const Chat = () => {
   const chatData = useAppSelector((state) => state.chatState);
 
   useEffect(() => {
-    if (userId && showChat) {
-      dispatch(getChatDetail({ id: userId }));
+    if (userEmail && showChat) {
+      dispatch(getChatDetail({ id: userEmail }));
       dispatch(updateChatUnseenCount({ count: 0 }));
     }
-  }, [dispatch, userId, showChat]);
+  }, [dispatch, userEmail, showChat]);
 
   useEffect(() => {
     let isPolling = true;
@@ -114,8 +118,8 @@ const Chat = () => {
       isRequestInProgress = true;
 
       try {
-        if (userId && showChat && chatData?.data?.length > 0) {
-          const response = await dispatch(getChatNewMessage({ id: userId }));
+        if (userEmail && showChat && chatData?.data?.length > 0) {
+          const response = await dispatch(getChatNewMessage({ id: userEmail }));
 
           if (
             response.payload &&
@@ -149,11 +153,11 @@ const Chat = () => {
     return () => {
       isPolling = false;
     };
-  }, [dispatch, userId, showChat, chatData?.data]);
+  }, [dispatch, userEmail, showChat, chatData?.data]);
 
   useEffect(() => {
-    userId && !showChat && dispatch(getChatUnseenCount({ id: userId }));
-  }, [dispatch, userId, showChat]);
+    userEmail && !showChat && dispatch(getChatUnseenCount({ id: userEmail }));
+  }, [dispatch, userEmail, showChat]);
 
   useEffect(() => {
     let isPolling = true;
@@ -167,12 +171,12 @@ const Chat = () => {
       isRequestInProgress = true;
 
       try {
-        if (userId && !showChat) {
+        if (userEmail && !showChat) {
           getFetchRef.current?.abort();
           getFetchRef.current = new AbortController();
           const response = await dispatch(
             getChatNewUnseenCount({
-              id: userId,
+              id: userEmail,
               signal: getFetchRef?.current?.signal,
             })
           );
@@ -199,7 +203,7 @@ const Chat = () => {
     return () => {
       isPolling = false;
     };
-  }, [dispatch, userId, showChat]);
+  }, [dispatch, userEmail, showChat]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const handleFileIconClick = () => {
@@ -266,7 +270,11 @@ const Chat = () => {
         errorToast("Message is required");
         return;
       }
-      if (!response.errors?.hasError && userId && chatData?.data[0]?.chat_id) {
+      if (
+        !response.errors?.hasError &&
+        userEmail &&
+        chatData?.data[0]?.chat_id
+      ) {
         const formData = parseFormData(response?.data);
         if (file && file.length > 0) {
           for (let i = 0; i < file.length; i++) {
@@ -284,7 +292,7 @@ const Chat = () => {
               setReplyText("");
               setFile(null);
             },
-            userId: userId,
+            userId: userEmail,
             chatId: chatData?.data[0]?.chat_id,
           })
         );
@@ -320,6 +328,19 @@ const Chat = () => {
     };
   }, [chatData.unseenCount]);
 
+  const groupedMessages: Record<string, TChatDetail[]> = chatData?.data
+    ?.slice()
+    .reverse()
+    .reduce((acc, message) => {
+      const dateKey = moment(message.created_at).format("MMM Do YYYY");
+
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+      acc[dateKey].push(message);
+      return acc;
+    }, {} as Record<string, TChatDetail[]>);
+
   return (
     <>
       {chatData?.loading && <UILoader />}
@@ -348,7 +369,6 @@ const Chat = () => {
           ></i>
 
           {showChat &&
-            userId &&
             (chatData?.data?.length === 0 ? (
               <div className="absolute w-[300px] bottom-[105%] right-0 rounded-b-xl bg-white max-h-[400px] overflow-auto shadow-card">
                 <div className="bg-primary text-white text-base leading-6 p-4">
@@ -417,72 +437,80 @@ const Chat = () => {
                   className="flex flex-col gap-4 p-4 h-[300px] max-h-[300px] overflow-auto"
                   ref={chatRef}
                 >
-                  {chatData?.data
-                    ?.slice()
-                    ?.reverse()
-                    ?.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`flex ${
-                          message.user_id ? "justify-start" : "justify-end"
-                        }`}
-                      >
-                        <div className="flex flex-col gap-2">
+                  {Object.entries(groupedMessages).map(([date, messages]) => (
+                    <div key={date}>
+                      <div className="text-center text-sm font-medium text-webblack pb-2">
+                        {date}
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        {messages?.map((message) => (
                           <div
-                            className={`p-3 rounded-lg max-w-[250px] ${
-                              message.user_id
-                                ? "bg-primary text-white self-start"
-                                : "bg-gray-100 text-webblack self-end"
+                            key={message.id}
+                            className={`flex ${
+                              message.user_id ? "justify-start" : "justify-end"
                             }`}
                           >
-                            <p>{message.message}</p>
-                            <small
-                              className={`block mt-1 text-xs  ${
-                                message.user_id ? "text-white" : "text-webblack"
-                              }`}
-                            >
-                              {new Date(
-                                message.created_at
-                              ).toLocaleTimeString()}
-                            </small>
-                          </div>
-                          {message?.images?.length > 0 && (
-                            <div
-                              className={`flex flex-col gap-2 w-[200px] ${
-                                message.user_id ? "" : "items-end"
-                              }`}
-                            >
-                              {message.images.map((item, i) => (
-                                <Link
-                                  href={`${WEBSITE_BASE_URL}/chat/${item?.image}`}
-                                  target="_blank"
-                                  key={i}
-                                  className={`${
-                                    item?.image?.endsWith(".pdf")
-                                      ? "h-10"
-                                      : "h-20"
-                                  } w-fit`}
+                            <div className="flex flex-col gap-2">
+                              <div
+                                className={`p-3 rounded-lg max-w-[250px] ${
+                                  message.user_id
+                                    ? "bg-primary text-white self-start"
+                                    : "bg-gray-100 text-webblack self-end"
+                                }`}
+                              >
+                                <p>{message.message}</p>
+                                <small
+                                  className={`block mt-1 text-xs  ${
+                                    message.user_id
+                                      ? "text-white"
+                                      : "text-webblack"
+                                  }`}
                                 >
-                                  <Image
-                                    unoptimized
-                                    src={
-                                      item?.image.endsWith(".pdf")
-                                        ? FILE
-                                        : `${WEBSITE_BASE_URL}/chat/${item?.image}`
-                                    }
-                                    alt={item?.image}
-                                    width={1000}
-                                    height={1000}
-                                    quality={100}
-                                    className="object-contain h-full w-full rounded-lg"
-                                  />
-                                </Link>
-                              ))}
+                                  {new Date(
+                                    message.created_at
+                                  ).toLocaleTimeString()}
+                                </small>
+                              </div>
+                              {message?.images?.length > 0 && (
+                                <div
+                                  className={`flex flex-col gap-2 w-[200px] ${
+                                    message.user_id ? "" : "items-end"
+                                  }`}
+                                >
+                                  {message.images.map((item, i) => (
+                                    <Link
+                                      href={`${WEBSITE_BASE_URL}/chat/${item?.image}`}
+                                      target="_blank"
+                                      key={i}
+                                      className={`${
+                                        item?.image?.endsWith(".pdf")
+                                          ? "h-10"
+                                          : "h-20"
+                                      } w-fit`}
+                                    >
+                                      <Image
+                                        unoptimized
+                                        src={
+                                          item?.image.endsWith(".pdf")
+                                            ? FILE
+                                            : `${WEBSITE_BASE_URL}/chat/${item?.image}`
+                                        }
+                                        alt={item?.image}
+                                        width={1000}
+                                        height={1000}
+                                        quality={100}
+                                        className="object-contain h-full w-full rounded-lg"
+                                      />
+                                    </Link>
+                                  ))}
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
 
                 <div className="flex justify-center items-center m-4 rounded-xl shadow-card border-[2px] border-secondary relative">

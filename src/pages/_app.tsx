@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/integration/react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  generateUserId();
+  // generateUserId();
 
   return (
     <>
