@@ -51,7 +51,7 @@ const Search = () => {
     switch (eventType) {
       case "Delivery Created":
         return "fa-file-alt";
-      case "Product Scanned":
+      case "Order Dispatched":
         return "fa-scanner-gun";
       case "Out For Delivery":
         return "fa-truck-fast";
@@ -63,7 +63,7 @@ const Search = () => {
   };
   const eventSteps = [
     { status: "Delivery Created" },
-    { status: "Product Scanned" },
+    { status: "Order Dispatched" },
     { status: "Out For Delivery" },
     { status: "Delivered" },
   ];
